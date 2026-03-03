@@ -17,7 +17,7 @@ export default function HomePage({ isActive, onNavigate }: HomePageProps) {
             id="page-home"
         >
             <SponsorTag />
-            <GlitchTitle text="NEXUS" />
+            <GlitchTitle text="Innovation" />
             <DateLine />
             <Tagline />
             <Countdown />

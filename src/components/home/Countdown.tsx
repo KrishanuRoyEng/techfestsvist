@@ -2,7 +2,7 @@
 
 import { useCountdown } from '@/hooks/useCountdown';
 
-const TARGET_DATE = '2025-03-14T09:00:00';
+const TARGET_DATE = '2026-04-12T09:00:00';
 
 export default function Countdown() {
     const { days, hours, mins, secs } = useCountdown(TARGET_DATE);
