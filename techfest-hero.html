@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NEXUS — Tech Fest</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Black+Ops+One&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--pink:#ff2d9b;--cyan:#00f0ff;--purple:#9b30ff;--orange:#ff6a00;--dark:#04020f;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);font-family:'Rajdhani',sans-serif;cursor:none;}
+
+/* CURSOR */
+#cur{position:fixed;width:14px;height:14px;border-radius:50%;background:var(--cyan);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);box-shadow:0 0 10px var(--cyan),0 0 30px var(--cyan);mix-blend-mode:screen;}
+#cur2{position:fixed;width:40px;height:40px;border-radius:50%;border:1px solid rgba(0,240,255,.4);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);}
+
+/* CANVAS */
+#city{position:fixed;inset:0;width:100%;height:100%;z-index:0;}
+
+/* OVERLAYS */
+body::after{content:'';position:fixed;inset:0;z-index:1;background:repeating-linear-gradient(0deg,rgba(0,0,0,.07) 0px,rgba(0,0,0,.07) 1px,transparent 1px,transparent 3px);pointer-events:none;}
+body::before{content:'';position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse 80% 60% at 50% 100%,transparent 40%,rgba(4,2,15,.95) 100%),radial-gradient(ellipse 100% 50% at 50% 0%,rgba(4,2,15,.6) 0%,transparent 60%);pointer-events:none;}
+
+/* TOP NAV */
+.top-nav{position:fixed;top:0;left:80px;right:80px;height:70px;display:flex;align-items:center;justify-content:space-between;z-index:200;padding:0 2rem;}
+.top-nav-logo{font-family:'Orbitron',monospace;font-size:1.6rem;font-weight:900;color:white;letter-spacing:3px;text-decoration:none;position:relative;}
+.top-nav-logo::after{content:'™';font-size:.45em;position:absolute;top:0;right:-1.2em;color:rgba(255,255,255,.5);}
+.top-nav-links{display:flex;gap:3rem;list-style:none;}
+.top-nav-links a{font-family:'Orbitron',monospace;font-size:.7rem;letter-spacing:3px;color:white;text-decoration:none;transition:color .3s;}
+.top-nav-links a:hover{color:var(--cyan);}
+
+/* LEFT SIDE NAV */
+.side-nav-left{position:fixed;left:0;top:0;bottom:0;width:80px;background:rgba(4,2,15,.75);border-right:1px solid rgba(255,255,255,.07);backdrop-filter:blur(12px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;z-index:300;}
+.side-icon{display:flex;flex-direction:column;align-items:center;gap:.4rem;cursor:pointer;color:rgba(255,255,255,.4);font-family:'Rajdhani',sans-serif;font-size:.55rem;letter-spacing:2px;text-transform:uppercase;transition:color .3s;text-decoration:none;position:relative;}
+.side-icon:hover,.side-icon.active{color:var(--cyan);}
+.side-icon:hover svg,.side-icon.active svg{filter:drop-shadow(0 0 6px var(--cyan));}
+.side-icon svg{width:22px;height:22px;fill:currentColor;}
+
+/* EVENTS FLYOUT — exactly like screenshot */
+.events-flyout{
+  position:fixed;left:80px;top:50%;
+  transform:translateY(-50%) translateX(-12px);
+  background:rgba(5,2,16,.93);
+  border:1px solid rgba(0,240,255,.18);
+  backdrop-filter:blur(18px);
+  padding:.8rem 0;
+  min-width:300px;
+  z-index:250;
+  opacity:0;pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;
+  box-shadow:4px 0 30px rgba(0,0,0,.6),0 0 40px rgba(0,240,255,.04);
+}
+.events-flyout.open{opacity:1;pointer-events:all;transform:translateY(-50%) translateX(0);}
+.flyout-header{font-family:'Orbitron',monospace;font-size:.55rem;letter-spacing:4px;color:rgba(0,240,255,.4);text-transform:uppercase;padding:.3rem 1.2rem .7rem;border-bottom:1px solid rgba(0,240,255,.08);margin-bottom:.3rem;}
+.flyout-item{
+  display:flex;align-items:center;gap:.75rem;
+  padding:.5rem 1.2rem;
+  font-family:'Orbitron',monospace;font-size:.65rem;
+  letter-spacing:1.5px;color:rgba(255,255,255,.65);
+  text-transform:uppercase;cursor:pointer;
+  transition:background .15s,color .15s,padding-left .15s;
+  text-decoration:none;white-space:nowrap;
+}
+.flyout-item:hover{background:rgba(0,240,255,.06);color:var(--cyan);padding-left:1.6rem;}
+.flyout-item.hi{color:var(--cyan);text-shadow:0 0 8px rgba(0,240,255,.5);}
+.flyout-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0;transition:background .15s;}
+.flyout-item:hover .flyout-dot,.flyout-item.hi .flyout-dot{background:var(--cyan);box-shadow:0 0 5px var(--cyan);}
+
+/* RIGHT SOCIAL NAV */
+.side-nav-right{position:fixed;right:0;top:0;bottom:0;width:80px;background:rgba(4,2,15,.75);border-left:1px solid rgba(255,255,255,.07);backdrop-filter:blur(12px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;z-index:300;}
+.social-icon{color:rgba(255,255,255,.4);text-decoration:none;transition:color .3s;display:flex;}
+.social-icon:hover{color:var(--pink);}
+.social-icon:hover svg{filter:drop-shadow(0 0 6px var(--pink));}
+.social-icon svg{width:20px;height:20px;fill:currentColor;}
+
+/* PAGES */
+.page{position:fixed;inset:0;z-index:10;overflow:hidden;display:none;}
+.page.active{display:flex;}
+
+/* HOME */
+#page-home{flex-direction:column;align-items:center;justify-content:center;pointer-events:none;}
+.sponsor-tag{display:flex;align-items:center;gap:.6rem;font-family:'Rajdhani',sans-serif;font-size:.85rem;letter-spacing:2px;color:rgba(255,255,255,.7);margin-bottom:.6rem;animation:fadeIn .8s ease both;}
+.sponsor-dot{width:18px;height:18px;background:var(--cyan);border-radius:50%;box-shadow:0 0 10px var(--cyan);}
+.title-wrap{position:relative;user-select:none;animation:fadeIn 1s .3s ease both;}
+.glitch-title{font-family:'Black Ops One',cursive;font-size:clamp(4.5rem,12vw,10rem);font-weight:400;line-height:.9;letter-spacing:4px;color:#fff;text-transform:uppercase;position:relative;text-shadow:0 0 10px rgba(0,240,255,.8),0 0 30px rgba(0,240,255,.5),0 0 60px rgba(0,240,255,.3),0 0 100px rgba(0,240,255,.15);animation:neonFlicker 5s infinite;}
+.glitch-title::before{content:attr(data-text);position:absolute;inset:0;color:var(--cyan);text-shadow:2px 0 var(--pink),0 0 20px var(--cyan);clip-path:polygon(0 20%,100% 20%,100% 35%,0 35%);animation:glitch-a 3s infinite;opacity:.8;}
+.glitch-title::after{content:attr(data-text);position:absolute;inset:0;color:var(--pink);text-shadow:-2px 0 var(--cyan),0 0 20px var(--pink);clip-path:polygon(0 60%,100% 60%,100% 72%,0 72%);animation:glitch-b 3s infinite;opacity:.8;}
+.glitch-mask{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0px,transparent 3px,rgba(4,2,15,.15) 3px,rgba(4,2,15,.15) 4px);pointer-events:none;}
+.date-line{display:flex;align-items:center;justify-content:center;gap:1.5rem;font-family:'Orbitron',monospace;font-size:clamp(.7rem,1.4vw,.95rem);letter-spacing:6px;color:rgba(255,255,255,.85);margin-top:.6rem;animation:fadeIn 1s .6s ease both;}
+.date-line .dash{width:40px;height:1px;background:var(--cyan);box-shadow:0 0 6px var(--cyan);}
+.date-num{color:var(--cyan);text-shadow:0 0 10px var(--cyan);}
+.tagline{font-family:'Rajdhani',sans-serif;font-size:clamp(.65rem,1.2vw,.9rem);letter-spacing:5px;color:rgba(255,255,255,.6);text-transform:uppercase;text-align:center;margin-top:.4rem;animation:fadeIn 1s .8s ease both;}
+.tagline strong{color:white;letter-spacing:7px;display:block;margin-top:.2rem;font-weight:600;}
+
+/* COUNTDOWN */
+.countdown{display:flex;align-items:center;gap:1.2rem;margin-top:1.8rem;pointer-events:all;animation:fadeIn 1s .9s ease both;background:rgba(0,0,0,.4);border:1px solid rgba(0,240,255,.15);padding:.9rem 2rem;backdrop-filter:blur(8px);position:relative;}
+.countdown::before{content:'';position:absolute;top:-1px;left:15%;right:15%;height:1px;background:linear-gradient(to right,transparent,var(--cyan),transparent);}
+.countdown::after{content:'';position:absolute;bottom:-1px;left:15%;right:15%;height:1px;background:linear-gradient(to right,transparent,var(--pink),transparent);}
+.cd-block{text-align:center;min-width:52px;}
+.cd-num{font-family:'Orbitron',monospace;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:900;color:var(--cyan);display:block;line-height:1;text-shadow:0 0 15px rgba(0,240,255,.5);}
+.cd-label{font-family:'Rajdhani',sans-serif;font-size:.6rem;letter-spacing:3px;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:.2rem;display:block;}
+.cd-sep{font-family:'Orbitron',monospace;font-size:1.4rem;color:var(--purple);margin-bottom:.8rem;text-shadow:0 0 8px var(--purple);animation:blink 1s infinite;}
+.cd-prefix{font-family:'Orbitron',monospace;font-size:.55rem;letter-spacing:4px;color:rgba(255,255,255,.3);text-transform:uppercase;margin-right:.5rem;white-space:nowrap;}
+
+/* HERO BTNS */
+.hero-btns{display:flex;gap:1.2rem;margin-top:1.6rem;pointer-events:all;animation:fadeIn 1s 1s ease both;}
+.btn{font-family:'Orbitron',monospace;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;padding:.85rem 2rem;cursor:pointer;text-decoration:none;transition:all .3s;display:inline-block;}
+.btn-glow{background:transparent;border:1px solid var(--cyan);color:var(--cyan);text-shadow:0 0 8px var(--cyan);box-shadow:0 0 15px rgba(0,240,255,.2),inset 0 0 15px rgba(0,240,255,.05);clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);}
+.btn-glow:hover{background:var(--cyan);color:var(--dark);text-shadow:none;box-shadow:0 0 40px rgba(0,240,255,.6);}
+.btn-pink{background:transparent;border:1px solid var(--pink);color:var(--pink);text-shadow:0 0 8px var(--pink);box-shadow:0 0 15px rgba(255,45,155,.2),inset 0 0 15px rgba(255,45,155,.05);clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);}
+.btn-pink:hover{background:var(--pink);color:white;text-shadow:none;box-shadow:0 0 40px rgba(255,45,155,.6);}
+
+/* CORNER BRACKETS */
+.corner{position:fixed;width:40px;height:40px;z-index:50;}
+.corner.tl{top:90px;left:90px;border-top:2px solid var(--cyan);border-left:2px solid var(--cyan);}
+.corner.tr{top:90px;right:90px;border-top:2px solid var(--cyan);border-right:2px solid var(--cyan);}
+.corner.bl{bottom:20px;left:90px;border-bottom:2px solid var(--cyan);border-left:2px solid var(--cyan);}
+.corner.br{bottom:20px;right:90px;border-bottom:2px solid var(--cyan);border-right:2px solid var(--cyan);}
+
+/* ═══ EVENTS PAGE ═══ */
+#page-events{flex-direction:column;overflow-y:auto;overflow-x:hidden;pointer-events:all;padding:90px 110px 60px 110px;scroll-behavior:smooth;}
+#page-events::-webkit-scrollbar{width:3px;}
+#page-events::-webkit-scrollbar-thumb{background:rgba(0,240,255,.4);}
+
+.ep-title{font-family:'Black Ops One',cursive;font-size:clamp(2.5rem,5vw,4.5rem);color:white;letter-spacing:4px;text-shadow:0 0 20px rgba(0,240,255,.4);margin-bottom:.3rem;}
+.ep-title span{color:var(--cyan);}
+.ep-sub{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:5px;color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:2.5rem;}
+.ep-divider{width:60px;height:2px;background:linear-gradient(to right,var(--cyan),var(--pink));margin-bottom:3.5rem;}
+
+.ev-section{margin-bottom:5rem;scroll-margin-top:100px;}
+.ev-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem;padding-bottom:.8rem;border-bottom:1px solid rgba(0,240,255,.1);}
+.ev-num{font-family:'Orbitron',monospace;font-size:.55rem;letter-spacing:3px;color:var(--purple);background:rgba(155,48,255,.1);padding:.25rem .6rem;border:1px solid rgba(155,48,255,.25);}
+.ev-name{font-family:'Orbitron',monospace;font-size:clamp(.9rem,1.8vw,1.4rem);font-weight:700;letter-spacing:2px;color:white;text-transform:uppercase;}
+.ev-name span{color:var(--cyan);}
+.ev-tag{margin-left:auto;font-family:'Rajdhani',sans-serif;font-size:.7rem;letter-spacing:3px;color:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.08);padding:.2rem .6rem;text-transform:uppercase;white-space:nowrap;}
+.ev-desc{font-family:'Rajdhani',sans-serif;font-size:1rem;color:rgba(255,255,255,.45);line-height:1.8;margin-bottom:1.2rem;max-width:680px;}
+.ev-info{display:flex;gap:2.5rem;flex-wrap:wrap;background:rgba(0,240,255,.03);border:1px solid rgba(0,240,255,.1);border-left:3px solid var(--cyan);padding:.8rem 1.2rem;margin-bottom:1.5rem;}
+.ev-info-item{font-family:'Rajdhani',sans-serif;font-size:.85rem;color:rgba(255,255,255,.45);}
+.ev-info-item strong{color:white;font-family:'Orbitron',monospace;font-size:.55rem;letter-spacing:2px;display:block;margin-bottom:.15rem;}
+.ev-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+.ev-card{background:rgba(6,2,18,.7);border:1px solid rgba(255,255,255,.07);padding:1.3rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s,background .3s;cursor:pointer;}
+.ev-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--cyan),var(--purple));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.ev-card:hover{border-color:rgba(0,240,255,.25);transform:translateY(-3px);background:rgba(0,240,255,.03);}
+.ev-card:hover::before{transform:scaleX(1);}
+.ec-cat{font-family:'Orbitron',monospace;font-size:.5rem;letter-spacing:3px;color:rgba(0,240,255,.6);text-transform:uppercase;margin-bottom:.45rem;}
+.ec-name{font-family:'Orbitron',monospace;font-size:.8rem;font-weight:700;letter-spacing:1.5px;color:white;margin-bottom:.5rem;text-transform:uppercase;}
+.ec-desc{font-family:'Rajdhani',sans-serif;font-size:.88rem;color:rgba(255,255,255,.4);line-height:1.55;margin-bottom:.8rem;}
+.ec-meta{display:flex;gap:.7rem;flex-wrap:wrap;}
+.ec-badge{font-family:'Rajdhani',sans-serif;font-size:.68rem;letter-spacing:1.5px;color:rgba(255,255,255,.35);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:.18rem .55rem;text-transform:uppercase;}
+.ec-badge.prize{color:var(--cyan);border-color:rgba(0,240,255,.2);background:rgba(0,240,255,.04);}
+.ec-num-bg{position:absolute;bottom:.5rem;right:.8rem;font-family:'Orbitron',monospace;font-size:2.8rem;font-weight:900;color:rgba(0,240,255,.03);line-height:1;pointer-events:none;}
+
+/* ═══ SIMPLE PAGES ═══ */
+.simple-page{flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:all;}
+.sp-title{font-family:'Black Ops One',cursive;font-size:clamp(2rem,5vw,4rem);color:white;text-transform:uppercase;letter-spacing:4px;text-shadow:0 0 20px rgba(0,240,255,.4);margin-bottom:.8rem;}
+.sp-title span{color:var(--cyan);}
+.sp-sub{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:5px;color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:1.8rem;}
+.sp-content{font-family:'Rajdhani',sans-serif;font-size:1rem;color:rgba(255,255,255,.5);line-height:2;max-width:520px;}
+.sp-back{display:inline-block;margin-top:1.5rem;font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:3px;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,240,255,.3);padding:.6rem 1.4rem;cursor:pointer;transition:background .3s,color .3s;}
+.sp-back:hover{background:var(--cyan);color:var(--dark);}
+
+/* KEYFRAMES */
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+@keyframes neonFlicker{0%,96%,100%{text-shadow:0 0 10px rgba(0,240,255,.8),0 0 30px rgba(0,240,255,.5),0 0 60px rgba(0,240,255,.3),0 0 100px rgba(0,240,255,.15);}97%{text-shadow:0 0 4px rgba(0,240,255,.4),0 0 10px rgba(0,240,255,.2);}98%{text-shadow:0 0 10px rgba(0,240,255,.9),0 0 40px rgba(0,240,255,.7),0 0 80px rgba(0,240,255,.4);}}
+@keyframes glitch-a{0%,94%,100%{clip-path:polygon(0 20%,100% 20%,100% 35%,0 35%);transform:translate(0);}95%{clip-path:polygon(0 12%,100% 12%,100% 28%,0 28%);transform:translate(-4px,2px);}97%{clip-path:polygon(0 44%,100% 44%,100% 55%,0 55%);transform:translate(3px,-1px);}99%{clip-path:polygon(0 66%,100% 66%,100% 78%,0 78%);transform:translate(-2px,0);}}
+@keyframes glitch-b{0%,92%,100%{clip-path:polygon(0 60%,100% 60%,100% 72%,0 72%);transform:translate(0);}93%{clip-path:polygon(0 52%,100% 52%,100% 64%,0 64%);transform:translate(4px,-2px);}96%{clip-path:polygon(0 75%,100% 75%,100% 88%,0 88%);transform:translate(-3px,1px);}98%{clip-path:polygon(0 30%,100% 30%,100% 42%,0 42%);transform:translate(2px,0);}}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="cur2"></div>
+<canvas id="city"></canvas>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="#" class="top-nav-logo" onclick="nav('home');return false;">NX</a>
+  <ul class="top-nav-links">
+    <li><a href="#" onclick="nav('accommodation');return false;">Accommodation</a></li>
+    <li><a href="#" onclick="nav('workshops');return false;">Workshops</a></li>
+    <li><a href="#" onclick="nav('events');return false;">Competitions</a></li>
+  </ul>
+  <div style="width:60px"></div>
+</nav>
+
+<!-- LEFT SIDE NAV -->
+<nav class="side-nav-left">
+  <a class="side-icon active" id="sn-home" onclick="nav('home');return false;" href="#">
+    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home
+  </a>
+  <a class="side-icon" id="sn-events" onclick="toggleFlyout(event);return false;" href="#">
+    <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>Events
+  </a>
+  <a class="side-icon" id="sn-contact" onclick="nav('contact');return false;" href="#">
+    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Contact
+  </a>
+  <a class="side-icon" id="sn-about" onclick="nav('about');return false;" href="#">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>About Us
+  </a>
+  <a class="side-icon" id="sn-sponsors" onclick="nav('sponsors');return false;" href="#">
+    <svg viewBox="0 0 24 24"><path d="M12 1l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16l-6.2 4.3 2.4-7.4L2 8.4h7.6z"/></svg>Sponsors
+  </a>
+  <a class="side-icon" id="sn-store" onclick="nav('store');return false;" href="#">
+    <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96C5 16.1 6.1 17 7.5 17H19v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63H15c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0019.5 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>Store
+  </a>
+</nav>
+
+<!-- EVENTS FLYOUT -->
+<div class="events-flyout" id="flyout">
+  <div class="flyout-header">// Event Categories</div>
+  <a class="flyout-item hi" href="#" onclick="goEv('throttle');return false;"><span class="flyout-dot"></span>Int'l Full Throttle</a>
+  <a class="flyout-item" href="#" onclick="goEv('robowars');return false;"><span class="flyout-dot"></span>Int'l Robowars</a>
+  <a class="flyout-item" href="#" onclick="goEv('drone');return false;"><span class="flyout-dot"></span>Int'l Drone Racing Competition</a>
+  <a class="flyout-item" href="#" onclick="goEv('pokemon');return false;"><span class="flyout-dot"></span>Pokémon Challenge</a>
+  <a class="flyout-item" href="#" onclick="goEv('exhibitions');return false;"><span class="flyout-dot"></span>Exhibitions</a>
+  <a class="flyout-item" href="#" onclick="goEv('lectures');return false;"><span class="flyout-dot"></span>Lectures</a>
+  <a class="flyout-item" href="#" onclick="goEv('twmun');return false;"><span class="flyout-dot"></span>TWMUN</a>
+  <a class="flyout-item" href="#" onclick="goEv('summit');return false;"><span class="flyout-dot"></span>Int'l Summit</a>
+  <a class="flyout-item" href="#" onclick="goEv('innovation');return false;"><span class="flyout-dot"></span>Innovation Challenge</a>
+  <a class="flyout-item" href="#" onclick="goEv('education');return false;"><span class="flyout-dot"></span>Education Fair</a>
+</div>
+
+<!-- RIGHT SOCIAL NAV -->
+<nav class="side-nav-right">
+  <a href="#" class="social-icon"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+  <a href="#" class="social-icon"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+  <a href="#" class="social-icon"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
+  <a href="#" class="social-icon"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+  <a href="#" class="social-icon"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+  <a href="#" class="social-icon"><svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg></a>
+</nav>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div class="page active" id="page-home">
+  <div class="sponsor-tag"><div class="sponsor-dot"></div><span>MarshMcLennan Presents</span> · XYZ Institute of Technology's</div>
+  <div class="title-wrap">
+    <div class="glitch-title" data-text="NEXUS">NEXUS</div>
+    <div class="glitch-mask"></div>
+  </div>
+  <div class="date-line">
+    <div class="dash"></div>
+    <span><span class="date-num">14</span>th – <span class="date-num">16</span>th March</span>
+    &nbsp;<span><span class="date-num">2</span>–<span class="date-num">0</span>–<span class="date-num">2</span>–<span class="date-num">5</span></span>
+    <div class="dash"></div>
+  </div>
+  <div class="tagline">Asia's Largest Science &amp; Technology Festival<strong>A SIMULATED PARADIGM</strong></div>
+  <div class="countdown">
+    <span class="cd-prefix">Fest begins in</span>
+    <div class="cd-block"><span class="cd-num" id="cd-d">00</span><span class="cd-label">Days</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-block"><span class="cd-num" id="cd-h">00</span><span class="cd-label">Hours</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-block"><span class="cd-num" id="cd-m">00</span><span class="cd-label">Mins</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-block"><span class="cd-num" id="cd-s">00</span><span class="cd-label">Secs</span></div>
+  </div>
+  <div class="hero-btns">
+    <a href="#" class="btn btn-glow" onclick="nav('events');return false;">View Events</a>
+    <a href="#" class="btn btn-pink" onclick="nav('contact');return false;">Register Now</a>
+  </div>
+</div>
+
+<!-- ═══════════════ EVENTS PAGE ═══════════════ -->
+<div class="page" id="page-events">
+  <div class="ep-title">Event <span>Categories</span></div>
+  <div class="ep-sub">// NEXUS 2025 · All Competitions &amp; Programs</div>
+  <div class="ep-divider"></div>
+
+  <div class="ev-section" id="ev-throttle">
+    <div class="ev-head"><span class="ev-num">01</span><span class="ev-name">Int'l <span>Full Throttle</span></span><span class="ev-tag">Flagship</span></div>
+    <p class="ev-desc">The crown jewel of NEXUS — a high-octane, multi-disciplinary international competition bringing together the brightest minds from across the globe.</p>
+    <div class="ev-info"><div class="ev-info-item"><strong>Date</strong>March 14, 2025</div><div class="ev-info-item"><strong>Venue</strong>Main Auditorium</div><div class="ev-info-item"><strong>Prize Pool</strong>₹1,00,000</div><div class="ev-info-item"><strong>Teams</strong>2–4 Members</div></div>
+    <div class="ev-cards">
+      <div class="ev-card"><div class="ec-cat">Track A</div><div class="ec-name">Engineering Sprint</div><div class="ec-desc">Build a functional prototype in under 6 hours using provided components.</div><div class="ec-meta"><span class="ec-badge">6 Hours</span><span class="ec-badge prize">₹40,000</span></div><div class="ec-num-bg">01</div></div>
+      <div class="ev-card"><div class="ec-cat">Track B</div><div class="ec-name">Innovation Pitch</div><div class="ec-desc">Present your breakthrough idea to a panel of international judges and industry leaders.</div><div class="ec-meta"><span class="ec-badge">15 min</span><span class="ec-badge prize">₹35,000</span></div><div class="ec-num-bg">02</div></div>
+      <div class="ev-card"><div class="ec-cat">Track C</div><div class="ec-name">Tech Triathlon</div><div class="ec-desc">Three rounds of coding, circuit design, and product strategy — survive all three.</div><div class="ec-meta"><span class="ec-badge">All Day</span><span class="ec-badge prize">₹25,000</span></div><div class="ec-num-bg">03</div></div>
+    </div>
+  </div>
+
+  <div class="ev-section" id="ev-robowars">
+    <div class="ev-head"><span class="ev-num">02</span><span class="ev-name">Int'l <span>Robowars</span></span><span class="ev-tag">Combat</span></div>
+    <p class="ev-desc">Engineer a combat robot, enter the arena, and destroy the competition. Custom-built war machines from 20+ countries clash in three weight categories.</p>
+    <div class="ev-info"><div class="ev-info-item"><strong>Date</strong>March 14–15, 2025</div><div class="ev-info-item"><strong>Venue</strong>Engineering Arena</div><div class="ev-info-item"><strong>Prize Pool</strong>₹75,000</div><div class="ev-info-item"><strong>Bot Weight</strong>Max 15 kg</div></div>
+    <div class="ev-cards">
+      <div class="ev-card"><div class="ec-cat">Category</div><div class="ec-name">Featherweight ≤1kg</div><div class="ec-desc">Lightweight bots battle it out in the arena. Great for first-timers.</div><div class="ec-meta"><span class="ec-badge prize">₹20,000</span></div><div class="ec-num-bg">01</div></div>
+      <div class="ev-card"><div class="ec-cat">Category</div><div class="ec-name">Middleweight 1–5kg</div><div class="ec-desc">Most competitive bracket — full weaponry allowed.</div><div class="ec-meta"><span class="ec-badge prize">₹30,000</span></div><div class="ec-num-bg">02</div></div>
+      <div class="ev-card"><div class="ec-cat">Category</div><div class="ec-name">Heavyweight 5–15kg</div><div class="ec-desc">Massive bots. Maximum destruction. The crowd favorite.</div><div class="ec-meta"><span class="ec-badge prize">₹25,000</span></div><div class="ec-num-bg">03</div></div>
+    </div>
+  </div>
+
+  <div class="ev-section" id="ev-drone">
+    <div class="ev-head"><span class="ev-num">03</span><span class="ev-name">Int'l Drone <span>Racing</span></span><span class="ev-tag">Aerial</span></div>
+    <p class="ev-desc">High-speed FPV drone racing through a custom obstacle course. Pilots from across the world compete for the fastest lap in this adrenaline-fueled aerial competition.</p>
+    <div class="ev-info"><div class="ev-info-item"><strong>Date</strong>March 15, 2025</div><div class="ev-info-item"><strong>Venue</strong>Open Ground</div><div class="ev-info-item"><strong>Prize Pool</strong>₹50,000</div><div class="ev-info-item"><strong>Format</strong>Time Trials + Finals</div></div>
+    <div class="ev-cards">
+      <div class="ev-card"><div class="ec-cat">Round 1</div><div class="ec-name">Qualification Time Trial</div><div class="ec-desc">Solo lap — fastest 16 pilots qualify. 3 attempts per pilot.</div><div class="ec-meta"><span class="ec-badge">FPV Allowed</span></div><div class="ec-num-bg">01</div></div>
+      <div class="ev-card"><div class="ec-cat">Round 2</div><div class="ec-name">Head-to-Head Knockout</div><div class="ec-desc">Bracket-style elimination races with 4 drones per heat.</div><div class="ec-meta"><span class="ec-badge prize">₹50,000</span></div><div class="ec-num-bg">02</div></div>
+    </div>
+  </div>
+
+  <div class="ev-section" id="ev-pokemon">
+    <div class="ev-head"><span class="ev-num">04</span><span class="ev-name"><span>Pokémon</span> Challenge</span><span class="ev-tag">Gaming</span></div>
+    <p class="ev-desc">A nationwide Pokémon tournament featuring VGC format battles, lore quizzes, and a custom fan-made game challenge. Gotta beat 'em all.</p>
+    <div class="ev-info"><div class="ev-info-item"><strong>Date</strong>March 14, 2025</div><div class="ev-info-item"><strong>Venue</strong>Gaming Zone, Hall B</div><div class="ev-info-item"><strong>Prize Pool</strong>₹15,000</div></div>
+    <div class="ev-cards">
+      <div class="ev-card"><div class="ec-cat">Format</div><div class="ec-name">VGC Battle Tournament</div><div class="ec-desc">Official VGC rules, Swiss rounds into top cut. Bring your best team.</div><div class="ec-meta"><span class="ec-badge prize">₹10,000</span></div><div class="ec-num-bg">01</div></div>
+      <div class="ev-card"><div class="ec-cat">Format</div><div class="ec-name">Pokédex Trivia Blitz</div><div class="ec-desc">100 questions. 10 minutes. How deep does your knowledge go?</div><div class="ec-meta"><span class="ec-badge prize">₹5,000</span></div><div class="ec-num-bg">02</div></div>
+    </div>
+  </div>
+
+  <div class="ev-section" id="ev-exhibitions">
+    <div class="ev-head"><span class="ev-num">05</span><span class="ev-name">Tech <span>Exhibitions</span></span><span class="ev-tag">Showcase</span></div>
+    <p class="ev-desc">Showcase your projects, prototypes, and research to thousands of visitors including industry professionals, investors, and media. Open to all disciplines.</p>
+    <div class="ev-info"><div class="ev-info-item"><strong>Date</strong>March 14–16, 2025</div><div class="ev-info-item"><strong>Venue</strong>Exhibition Hall</div><div class="ev-info-item"><strong>Booths</strong>100+ Stalls</div></div>
+    <div class="ev-cards">
+      <div class="ev-card"><div class="ec-cat">Track</div><div class="ec-name">Hardware &amp; IoT</div><div class="ec-desc">Physical prototypes, embedded systems, smart devices.</div><div class="ec-meta"><span class="ec-badge">Best Booth Prize</span></div><div class="ec-num-bg">01</div></div>
+      <div class="ev-card"><div class="ec-cat">Track</div><div class="ec-name">AI &amp; Software</div><div class="ec-desc">Demo your ML model, app, or SaaS product live.</div><div class="ec-meta"><span class="ec-badge">Investor Pitch</span></div><div class="ec-num-bg">02</div></div>
+      <div class="ev-card"><div class="ec-cat">Track</div><div class="ec-name">Research Papers</div><div class="ec-desc">Poster presentation of research work with expert evaluation.</div><div class="ec-meta"><span class="ec-badge prize">₹15,000</span></div><div class="ec-num-bg">03</div></div>
+    </div>
+  </div>
+
+  <div class="ev-section" id="ev-lectures">
+    <div class="ev-head"><span class="ev-num">06</span><span class="ev-name">Guest <span>Lectures</span></span><span class="ev-tag">Knowledge</span></div>
+    <p class="ev-desc">Hear directly from founders, researchers, and industry leaders at the frontier of technology. Talks span AI, space, biotech, and the future of human civilization.</p>
+    <div class="ev-info"><div class="ev-info-item"><strong>Date</strong>March 14–16, 2025</div><div class="ev-info-item"><strong>Venue</strong>Main Auditorium</div><div class="ev-info-item"><strong>Speakers</strong>12+ Confirmed</div></div>
+    <div class="ev-cards">
+      <div class="ev-card"><div class="ec-cat">Keynote</div><div class="ec-name">The Future of AI</div><div class="ec-desc">Opening keynote by a leading AI researcher on where we're headed.</div><div class="ec-meta"><span class="ec-badge">March 14 · 10AM</span></div><div class="ec-num-bg">01</div></div>
+      <div class="ev-card"><div class="ec-cat">Panel</div><div class="ec-name">Startup &amp; Venture</div><div class="ec-desc">Founders of unicorn startups share their stories and strategies.</div><div class="ec-meta"><span class="ec-badge">March 15 · 2PM</span></div><div class="ec-num-bg">02</div></div>
+      <div class="ev-card"><div class="ec-cat">Talk</div><div class="ec-name">Space &amp; Frontier Tech</div><div class="ec-desc">ISRO/SpaceX-era engineers discuss the next 50 years of spaceflight.</div><div class="ec-meta"><span class="ec-badge">March 16 · 11AM</span></div><div class="ec-num-bg">03</div></div>
+    </div>
+  </div>
+
+  <div class="ev-section" id="ev-twmun">
+    <div class="ev-head"><span class="ev-num">07</span><span class="ev-name"><span>TWMUN</span></span><span class="ev-tag">Diplomacy</span></div>
+    <p class="ev-desc">TechFest World Model United Nations — a two-day conference where delegates debate global science & technology policy including AI governance and bioethics.</p>
+    <div class="ev-info"><div class="ev-info-item"><strong>Date</strong>March 15–16, 2025</div><div class="ev-info-item"><strong>Venue</strong>Seminar Hall A</div><div class="ev-info-item"><strong>Format</strong>2-Day Conference</div></div>
+    <div class="ev-cards">
+      <div class="ev-card"><div class="ec-cat">Committee</div><div class="ec-name">UNSC — AI Governance</div><div class="ec-desc">Debate international AI regulation and autonomous weapons treaties.</div><div class="ec-meta"><span class="ec-badge">Advanced</span></div><div class="ec-num-bg">01</div></div>
+      <div class="ev-card"><div class="ec-cat">Committee</div><div class="ec-name">UNEP — Climate Tech</div><div class="ec-desc">Green hydrogen, carbon capture, and net-zero commitments.</div><div class="ec-meta"><span class="ec-badge">Intermediate</span></div><div class="ec-num-bg">02</div></div>
+    </div>
+  </div>
+
+  <div class="ev-section" id="ev-summit">
+    <div class="ev-head"><span class="ev-num">08</span><span class="ev-name">Int'l <span>Summit</span></span><span class="ev-tag">Leadership</span></div>
+    <p class="ev-desc">A curated summit for student leaders and entrepreneurs featuring fireside chats, masterclasses, and exclusive networking with global decision-makers.</p>
+    <div class="ev-info"><div class="ev-info-item"><strong>Date</strong>March 15, 2025</div><div class="ev-info-item"><strong>Venue</strong>Board Room, Admin Block</div><div class="ev-info-item"><strong>Capacity</strong>Invite Only · 100 seats</div></div>
+    <div class="ev-cards">
+      <div class="ev-card"><div class="ec-cat">Session</div><div class="ec-name">Leadership Masterclass</div><div class="ec-desc">Intensive session with CEOs and policy leaders on leading in uncertainty.</div><div class="ec-meta"><span class="ec-badge">Invite Only</span></div><div class="ec-num-bg">01</div></div>
+      <div class="ev-card"><div class="ec-cat">Session</div><div class="ec-name">Global Startup Exchange</div><div class="ec-desc">Connect startups with mentors, advisors, and seed-stage investors.</div><div class="ec-meta"><span class="ec-badge">Application Required</span></div><div class="ec-num-bg">02</div></div>
+    </div>
+  </div>
+
+  <div class="ev-section" id="ev-innovation">
+    <div class="ev-head"><span class="ev-num">09</span><span class="ev-name">Innovation <span>Challenge</span></span><span class="ev-tag">Hackathon</span></div>
+    <p class="ev-desc">36-hour problem-solving marathon with real-world problems from top companies. Build, pitch, and win — or get fast-tracked into their internship programs.</p>
+    <div class="ev-info"><div class="ev-info-item"><strong>Date</strong>March 14–15, 2025</div><div class="ev-info-item"><strong>Venue</strong>Hackathon Hub</div><div class="ev-info-item"><strong>Prize Pool</strong>₹1,50,000</div><div class="ev-info-item"><strong>Teams</strong>3–5 Members</div></div>
+    <div class="ev-cards">
+      <div class="ev-card"><div class="ec-cat">Problem Set A</div><div class="ec-name">FinTech Solutions</div><div class="ec-desc">Build tech for financial inclusion, fraud detection, or lending for underbanked communities.</div><div class="ec-meta"><span class="ec-badge prize">₹60,000</span></div><div class="ec-num-bg">01</div></div>
+      <div class="ev-card"><div class="ec-cat">Problem Set B</div><div class="ec-name">Health &amp; MedTech</div><div class="ec-desc">AI-assisted diagnostics, telemedicine tools, or wearable health monitoring.</div><div class="ec-meta"><span class="ec-badge prize">₹50,000</span></div><div class="ec-num-bg">02</div></div>
+      <div class="ev-card"><div class="ec-cat">Problem Set C</div><div class="ec-name">Sustainability Tech</div><div class="ec-desc">Smart grid, precision agriculture, or circular economy platforms.</div><div class="ec-meta"><span class="ec-badge prize">₹40,000</span></div><div class="ec-num-bg">03</div></div>
+    </div>
+  </div>
+
+  <div class="ev-section" id="ev-education">
+    <div class="ev-head"><span class="ev-num">10</span><span class="ev-name">Education <span>Fair</span></span><span class="ev-tag">Careers</span></div>
+    <p class="ev-desc">Meet representatives from 50+ universities and research institutes. Get guidance on admissions, scholarships, and research opportunities worldwide.</p>
+    <div class="ev-info"><div class="ev-info-item"><strong>Date</strong>March 16, 2025</div><div class="ev-info-item"><strong>Venue</strong>Exhibition Hall C</div><div class="ev-info-item"><strong>Institutions</strong>50+ Universities</div></div>
+    <div class="ev-cards">
+      <div class="ev-card"><div class="ec-cat">Zone</div><div class="ec-name">Postgraduate Programs</div><div class="ec-desc">MS, PhD, and MBA programs across engineering, CS, and management.</div><div class="ec-meta"><span class="ec-badge">Free Entry</span></div><div class="ec-num-bg">01</div></div>
+      <div class="ev-card"><div class="ec-cat">Zone</div><div class="ec-name">Scholarship Lounge</div><div class="ec-desc">One-on-one sessions with scholarship advisors and fellowship coordinators.</div><div class="ec-meta"><span class="ec-badge">Slots Limited</span></div><div class="ec-num-bg">02</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SIMPLE PAGES ═══════════════ -->
+<div class="page simple-page" id="page-about">
+  <div class="sp-title">About <span>NEXUS</span></div>
+  <div class="sp-sub">// Est. 2015 · XYZ Institute of Technology</div>
+  <p class="sp-content">NEXUS is the annual technical festival of XYZ Institute of Technology. Since 2015, we've brought together over 5,000 students from 100+ colleges across Asia to compete, collaborate, and innovate. Our mission: to spark the next generation of engineers and entrepreneurs.</p>
+  <a class="sp-back" onclick="nav('home');return false;" href="#">← Back to Home</a>
+</div>
+<div class="page simple-page" id="page-contact">
+  <div class="sp-title">Register &amp; <span>Contact</span></div>
+  <div class="sp-sub">// NEXUS 2025</div>
+  <p class="sp-content">📍 XYZ Institute of Technology, 123 Tech Avenue, City — 700001<br/><br/>📧 techfest@xyzit.edu.in<br/>📞 +91 98765 43210<br/><br/>Registration opens January 15, 2025.<br/>All events require a valid college ID.</p>
+  <a class="sp-back" onclick="nav('home');return false;" href="#">← Back to Home</a>
+</div>
+<div class="page simple-page" id="page-sponsors">
+  <div class="sp-title">Our <span>Sponsors</span></div>
+  <div class="sp-sub">// Partners &amp; Supporters</div>
+  <p class="sp-content"><strong style="color:var(--cyan)">Title Sponsor</strong><br/>MarshMcLennan<br/><br/><strong style="color:white">Platinum</strong><br/>TechCorp · InnovateLabs · ByteForge<br/><br/><strong style="color:white">Gold</strong><br/>NeuralEdge · CloudPeak · DataSynth<br/><br/>Interested? Contact sponsors@xyzit.edu.in</p>
+  <a class="sp-back" onclick="nav('home');return false;" href="#">← Back to Home</a>
+</div>
+<div class="page simple-page" id="page-store">
+  <div class="sp-title">NEXUS <span>Store</span></div>
+  <div class="sp-sub">// Official Merchandise</div>
+  <p class="sp-content">Official NEXUS 2025 merch — t-shirts, hoodies, bags, and limited edition collectibles. Pre-order now and pick up on event day.<br/><br/>All proceeds support the fest operations and prize pool.</p>
+  <a class="sp-back" onclick="nav('home');return false;" href="#">← Back to Home</a>
+</div>
+<div class="page simple-page" id="page-accommodation">
+  <div class="sp-title"><span>Accommodation</span></div>
+  <div class="sp-sub">// On-Campus Stay</div>
+  <p class="sp-content">On-campus accommodation at XYZ Institute's hostels.<br/><br/>Capacity: 500 beds · First-come first-served<br/>Cost: ₹300/night · Includes meals<br/><br/>Book via the registration portal before February 28.</p>
+  <a class="sp-back" onclick="nav('home');return false;" href="#">← Back to Home</a>
+</div>
+<div class="page simple-page" id="page-workshops">
+  <div class="sp-title">Work<span>shops</span></div>
+  <div class="sp-sub">// Hands-On Learning Sessions</div>
+  <p class="sp-content">10+ workshops across 3 days:<br/><br/>ML with PyTorch · PCB Design · Unity Game Dev · 3D Printing &amp; CAD · Cybersecurity CTF · Full-Stack Web Dev · VLSI Design · Drone Assembly<br/><br/>Each: 3 hrs · ₹200 · Certificate included</p>
+  <a class="sp-back" onclick="nav('home');return false;" href="#">← Back to Home</a>
+</div>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+let mx=0,my=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){tx+=(mx-tx)*.1;ty+=(my-ty)*.1;cur2.style.left=tx+'px';cur2.style.top=ty+'px';requestAnimationFrame(loop);})();
+
+// PAGE NAVIGATION
+function nav(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.side-icon').forEach(i=>i.classList.remove('active'));
+  const pg=document.getElementById('page-'+name);
+  if(pg) pg.classList.add('active');
+  const si=document.getElementById('sn-'+name);
+  if(si) si.classList.add('active');
+  closeFlyout();
+}
+
+// FLYOUT
+let flyOpen=false;
+function toggleFlyout(e){
+  e.stopPropagation();
+  flyOpen=!flyOpen;
+  document.getElementById('flyout').classList.toggle('open',flyOpen);
+  document.getElementById('sn-events').classList.toggle('active',flyOpen);
+}
+function closeFlyout(){
+  flyOpen=false;
+  document.getElementById('flyout').classList.remove('open');
+  document.getElementById('sn-events').classList.remove('active');
+}
+document.addEventListener('click',closeFlyout);
+
+// NAVIGATE TO EVENT SECTION
+function goEv(id){
+  nav('events');
+  document.getElementById('sn-events').classList.add('active');
+  setTimeout(()=>{
+    const el=document.getElementById('ev-'+id);
+    if(el){
+      const pg=document.getElementById('page-events');
+      pg.scrollTo({top:el.offsetTop-100,behavior:'smooth'});
+    }
+  },60);
+}
+
+// COUNTDOWN
+function tick(){
+  const diff=Math.max(0,new Date('2025-03-14T09:00:00').getTime()-Date.now());
+  const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+  document.getElementById('cd-d').textContent=String(d).padStart(2,'0');
+  document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
+
+// CANVAS CITYSCAPE
+const cv=document.getElementById('city'),cx=cv.getContext('2d');
+let W,H;
+function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+resize();window.addEventListener('resize',()=>{resize();buildCity();});
+const PINK='#ff2d9b',CYAN='#00f0ff',PURPLE='#9b30ff',ORANGE='#ff6a00';
+const neonCols=[PINK,CYAN,PURPLE,ORANGE,'#ff8800','#00ffaa'];
+let buildings=[],bgBuildings=[],flyP=[],stars=[];
+function rC(){return neonCols[Math.floor(Math.random()*neonCols.length)];}
+function buildCity(){
+  buildings=[];bgBuildings=[];stars=[];flyP=[];
+  for(let i=0;i<200;i++)stars.push({x:Math.random()*W,y:Math.random()*H*.6,r:Math.random()*.8+.2,a:Math.random()*.6+.2,f:Math.random()});
+  for(let i=0;i<8;i++)flyP.push({x:Math.random()*W,y:H*.4+Math.random()*H*.15,vx:(Math.random()+.3)*(Math.random()>.5?1:-1)*1.5,len:Math.random()*60+30,col:Math.random()>.5?CYAN:PINK,a:Math.random()*.7+.3});
+  for(let i=0;i<Math.floor(W/30);i++){const bw=Math.random()*60+25,bh=Math.random()*(H*.35)+H*.1,bx=Math.random()*W,col=rC(),ho=Math.random()>.4;bgBuildings.push({x:bx,w:bw,h:bh,col,ho,wc:rC(),sh:Math.floor(Math.random()*4)});}
+  let x=0;
+  while(x<W+80){const bw=Math.random()*100+40,bh=Math.random()*(H*.55)+H*.2,wc=rC(),wins=[];const wr=Math.floor(bh/18),wc2=Math.floor(bw/14);for(let r=0;r<wr;r++)for(let c=0;c<wc2;c++)wins.push({r,c,on:Math.random()>.35,fl:Math.random()>.8,ph:Math.random()*6.28});buildings.push({x,w:bw,h:bh,y:H-bh,wc,wins,sh:Math.floor(Math.random()*5),ant:Math.random()>.5,ne:Math.random()>.4,ec:rC()});x+=bw+Math.random()*8-4;}
+}
+buildCity();
+let t=0;
+function draw(){
+  t+=.016;cx.clearRect(0,0,W,H);
+  const sky=cx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#020008');sky.addColorStop(.3,'#0a0025');sky.addColorStop(.55,'#150045');sky.addColorStop(.7,'#1a0030');sky.addColorStop(.85,'#250010');sky.addColorStop(1,'#0a0008');cx.fillStyle=sky;cx.fillRect(0,0,W,H);
+  const hg=cx.createRadialGradient(W/2,H*.62,0,W/2,H*.62,W*.7);hg.addColorStop(0,'rgba(155,48,255,.18)');hg.addColorStop(.4,'rgba(255,45,155,.1)');hg.addColorStop(.7,'rgba(0,240,255,.06)');hg.addColorStop(1,'transparent');cx.fillStyle=hg;cx.fillRect(0,0,W,H);
+  stars.forEach(s=>{cx.beginPath();cx.arc(s.x,s.y,s.r,0,Math.PI*2);cx.fillStyle=`rgba(255,255,255,${s.a*(0.7+0.3*Math.sin(t*s.f*3+s.x))})`;cx.fill();});
+  bgBuildings.forEach(b=>{const by=H-b.h;cx.fillStyle='rgba(2,0,10,.85)';dbs(cx,b.x,by,b.w,b.h,b.sh);cx.fill();if(b.ho){cx.strokeStyle=b.col;cx.lineWidth=.6;cx.globalAlpha=.25+.08*Math.sin(t+b.x);dbs(cx,b.x,by,b.w,b.h,b.sh);cx.stroke();cx.globalAlpha=1;}});
+  buildings.forEach(b=>{const bg=cx.createLinearGradient(b.x,b.y,b.x+b.w,b.y+b.h);bg.addColorStop(0,'rgba(8,4,20,.98)');bg.addColorStop(1,'rgba(12,6,30,.98)');cx.fillStyle=bg;dbs(cx,b.x,b.y,b.w,b.h,b.sh);cx.fill();if(b.ne){cx.save();cx.shadowColor=b.ec;cx.shadowBlur=8;cx.strokeStyle=b.ec;cx.lineWidth=1;cx.globalAlpha=.4+.15*Math.sin(t*1.5+b.x*.01);dbs(cx,b.x,b.y,b.w,b.h,b.sh);cx.stroke();cx.restore();}b.wins.forEach(w=>{if(!w.on)return;const fa=w.fl?(0.5+0.5*Math.sin(t*3+w.ph)):1,wx=b.x+6+w.c*14,wy=b.y+8+w.r*18;if(wx+6>b.x+b.w-6||wy+4>b.y+b.h-4)return;cx.save();cx.shadowColor=b.wc;cx.shadowBlur=4;cx.fillStyle=b.wc;cx.globalAlpha=.35*fa;cx.fillRect(wx,wy,6,4);cx.restore();});if(b.ant){const ax=b.x+b.w/2,ah=15;cx.save();cx.strokeStyle='rgba(255,255,255,.3)';cx.lineWidth=1;cx.beginPath();cx.moveTo(ax,b.y);cx.lineTo(ax,b.y-ah);cx.stroke();cx.beginPath();cx.arc(ax,b.y-ah,2,0,Math.PI*2);cx.fillStyle=PINK;cx.shadowColor=PINK;cx.shadowBlur=8;cx.globalAlpha=0.5+0.5*Math.sin(t*2+b.x);cx.fill();cx.restore();}});
+  cx.save();cx.shadowColor=PINK;cx.shadowBlur=20;cx.strokeStyle='rgba(255,45,155,.4)';cx.lineWidth=1;cx.beginPath();cx.moveTo(0,H*.85);cx.lineTo(W,H*.85);cx.stroke();cx.restore();
+  flyP.forEach(p=>{p.x+=p.vx;if(p.x>W+100)p.x=-100;if(p.x<-100)p.x=W+100;cx.save();cx.globalAlpha=p.a*(0.6+0.4*Math.random());const g=cx.createLinearGradient(p.vx>0?p.x-p.len:p.x,p.y,p.vx>0?p.x:p.x+p.len,p.y);g.addColorStop(0,'transparent');g.addColorStop(1,p.col);cx.fillStyle=g;cx.fillRect(p.vx>0?p.x-p.len:p.x,p.y-1,p.len,2);cx.restore();});
+  requestAnimationFrame(draw);
+}
+function dbs(ctx,x,y,w,h,s){ctx.beginPath();switch(s){case 0:ctx.rect(x,y,w,h);break;case 1:ctx.moveTo(x,y+h);ctx.lineTo(x,y+h*.25);ctx.lineTo(x+w*.15,y+h*.25);ctx.lineTo(x+w*.15,y);ctx.lineTo(x+w*.85,y);ctx.lineTo(x+w*.85,y+h*.25);ctx.lineTo(x+w,y+h*.25);ctx.lineTo(x+w,y+h);ctx.closePath();break;case 2:ctx.moveTo(x,y+h);ctx.lineTo(x,y+h*.3);ctx.lineTo(x+w*.2,y);ctx.lineTo(x+w*.8,y);ctx.lineTo(x+w,y+h*.3);ctx.lineTo(x+w,y+h);ctx.closePath();break;case 3:ctx.moveTo(x,y+h);ctx.lineTo(x,y+h*.2);ctx.lineTo(x+w/2,y);ctx.lineTo(x+w,y+h*.2);ctx.lineTo(x+w,y+h);ctx.closePath();break;case 4:ctx.moveTo(x,y+h);ctx.lineTo(x,y+h*.35);ctx.lineTo(x+w*.35,y+h*.1);ctx.lineTo(x+w/2,y);ctx.lineTo(x+w*.65,y+h*.1);ctx.lineTo(x+w,y+h*.35);ctx.lineTo(x+w,y+h);ctx.closePath();break;default:ctx.rect(x,y,w,h);}};
+draw();
+</script>
+</body>
+</html>

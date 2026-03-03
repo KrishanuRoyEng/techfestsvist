@@ -1,66 +1,94 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
 
-export default function Home() {
+import { useState, useCallback, useRef } from 'react';
+
+import CustomCursor from '@/components/cursor/CustomCursor';
+import CityCanvas from '@/components/canvas/CityCanvas';
+import CornerBrackets from '@/components/layout/CornerBrackets';
+import TopNav from '@/components/layout/TopNav';
+import SideNavLeft from '@/components/layout/SideNavLeft';
+import SideNavRight from '@/components/layout/SideNavRight';
+import EventsFlyout from '@/components/layout/EventsFlyout';
+import HomePage from '@/components/pages/HomePage';
+import EventsPage from '@/components/pages/EventsPage';
+import SimplePage from '@/components/pages/SimplePage';
+import { simplePages } from '@/data/simplePages';
+
+export default function Page() {
+  const [activePage, setActivePage] = useState('home');
+  const [flyoutOpen, setFlyoutOpen] = useState(false);
+  const eventsPageRef = useRef<HTMLDivElement>(null);
+
+  const closeFlyout = useCallback(() => {
+    setFlyoutOpen(false);
+  }, []);
+
+  const navigate = useCallback(
+    (page: string) => {
+      setActivePage(page);
+      closeFlyout();
+    },
+    [closeFlyout]
+  );
+
+  const toggleFlyout = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      setFlyoutOpen((prev) => !prev);
+    },
+    []
+  );
+
+  const navigateToEvent = useCallback(
+    (eventId: string) => {
+      navigate('events');
+      setTimeout(() => {
+        const el = document.getElementById(`ev-${eventId}`);
+        if (el && eventsPageRef.current) {
+          eventsPageRef.current.scrollTo({
+            top: el.offsetTop - 100,
+            behavior: 'smooth',
+          });
+        }
+      }, 60);
+    },
+    [navigate]
+  );
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div onClick={closeFlyout}>
+      <CustomCursor />
+      <CityCanvas />
+      <CornerBrackets />
+
+      {/* Navigation */}
+      <TopNav onNavigate={navigate} />
+      <SideNavLeft
+        activePage={activePage}
+        onNavigate={navigate}
+        onToggleFlyout={toggleFlyout}
+        flyoutOpen={flyoutOpen}
+      />
+      <SideNavRight />
+      <EventsFlyout
+        isOpen={flyoutOpen}
+        onNavigateToEvent={navigateToEvent}
+      />
+
+      {/* Pages */}
+      <HomePage isActive={activePage === 'home'} onNavigate={navigate} />
+      <EventsPage
+        isActive={activePage === 'events'}
+        ref={eventsPageRef}
+      />
+      {simplePages.map((pageData) => (
+        <SimplePage
+          key={pageData.id}
+          data={pageData}
+          isActive={activePage === pageData.id}
+          onNavigate={navigate}
         />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      ))}
     </div>
   );
 }

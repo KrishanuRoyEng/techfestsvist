@@ -1,0 +1,332 @@
+import { EventSectionData } from '@/types';
+
+export const eventSections: EventSectionData[] = [
+    {
+        id: 'techtrix',
+        number: '01',
+        name: '',
+        nameHighlight: 'TechTrix',
+        tag: 'Technical',
+        description:
+            'Push the boundaries of technical knowledge in this flagship event. Solve real-world engineering problems, demonstrate your technical acumen, and compete against the best minds from colleges across the region.',
+        info: [
+            { label: 'Date', value: 'April 1–2, 2026' },
+            { label: 'Venue', value: 'SVIST Campus' },
+            { label: 'Event', value: 'TechTrix' },
+            { label: 'Contact', value: '+91 9163491215' },
+        ],
+        cards: [
+            {
+                category: 'Round 1',
+                name: 'Technical Quiz',
+                description: 'A rapid-fire technical quiz testing core engineering fundamentals across all disciplines.',
+                badges: [{ label: 'All Branches' }],
+                number: '01',
+            },
+            {
+                category: 'Round 2',
+                name: 'Problem Solving',
+                description: 'Tackle real-world engineering challenges with innovative, time-bound solutions.',
+                badges: [{ label: 'Teams of 2' }],
+                number: '02',
+            },
+            {
+                category: 'Round 3',
+                name: 'Technical Presentation',
+                description: 'Present your solution to a panel of expert judges from industry and academia.',
+                badges: [{ label: 'Finals' }, { label: 'Prize', isPrize: true }],
+                number: '03',
+            },
+        ],
+    },
+    {
+        id: 'robotics',
+        number: '02',
+        name: '',
+        nameHighlight: 'Robotics',
+        tag: 'Combat & Automation',
+        description:
+            'Design, build, and battle — or automate. The Robotics event challenges participants to engineer functional robots that can complete tasks, navigate obstacles, or compete head-to-head in the arena.',
+        info: [
+            { label: 'Date', value: 'April 1–2, 2026' },
+            { label: 'Venue', value: 'Engineering Arena, SVIST' },
+            { label: 'Format', value: 'Build + Compete' },
+            { label: 'Teams', value: '2–4 Members' },
+        ],
+        cards: [
+            {
+                category: 'Event',
+                name: 'Bot Wars',
+                description: 'Remote-controlled combat robots clash in the arena. Last bot standing wins.',
+                badges: [{ label: 'Max 5kg' }, { label: 'Prize', isPrize: true }],
+                number: '01',
+            },
+            {
+                category: 'Event',
+                name: 'Line Follower',
+                description: 'Autonomous line-following robots race against the clock on a custom track.',
+                badges: [{ label: 'Autonomous' }, { label: 'Prize', isPrize: true }],
+                number: '02',
+            },
+            {
+                category: 'Event',
+                name: 'Robo Soccer',
+                description: 'Two teams of bots compete on a miniature football field. Strategy meets engineering.',
+                badges: [{ label: 'Teams of 2' }],
+                number: '03',
+            },
+        ],
+    },
+    {
+        id: 'createx',
+        number: '03',
+        name: '',
+        nameHighlight: 'CreaTeX',
+        tag: 'Design & Innovation',
+        description:
+            'Where creativity meets engineering. CreaTeX is a design-thinking and innovation challenge where participants conceptualize, prototype, and present creative technical solutions to modern problems.',
+        info: [
+            { label: 'Date', value: 'April 1–2, 2026' },
+            { label: 'Venue', value: 'Design Lab, SVIST' },
+            { label: 'Format', value: 'Ideate + Prototype' },
+            { label: 'Teams', value: '2–3 Members' },
+        ],
+        cards: [
+            {
+                category: 'Round 1',
+                name: 'Ideation Sprint',
+                description: 'Generate a creative solution to a given problem statement in under 2 hours.',
+                badges: [{ label: '2 Hours' }],
+                number: '01',
+            },
+            {
+                category: 'Round 2',
+                name: 'Prototype & Build',
+                description: 'Turn your idea into a working prototype using the provided materials.',
+                badges: [{ label: 'Hands-On' }],
+                number: '02',
+            },
+            {
+                category: 'Round 3',
+                name: 'Pitch to Judges',
+                description: 'Present your prototype and the design thinking behind it to expert judges.',
+                badges: [{ label: 'Finals' }, { label: 'Prize', isPrize: true }],
+                number: '03',
+            },
+        ],
+    },
+    {
+        id: 'craftomania',
+        number: '04',
+        name: '',
+        nameHighlight: 'Craftomania',
+        tag: 'Hands-On',
+        description:
+            'A hands-on engineering crafts competition that celebrates practical skills, precision, and creativity. Participants work with raw materials to craft functional or artistic engineering marvels under time pressure.',
+        info: [
+            { label: 'Date', value: 'April 1–2, 2026' },
+            { label: 'Venue', value: 'Workshop Hall, SVIST' },
+            { label: 'Format', value: 'Timed Crafting' },
+            { label: 'Solo / Duo', value: 'Open to All' },
+        ],
+        cards: [
+            {
+                category: 'Challenge',
+                name: 'Bridge Building',
+                description: 'Build the strongest bridge using limited materials. Load tested at the end.',
+                badges: [{ label: 'Solo' }, { label: 'Prize', isPrize: true }],
+                number: '01',
+            },
+            {
+                category: 'Challenge',
+                name: 'Waste to Wonder',
+                description: 'Create a functional or artistic object using only waste and recycled materials.',
+                badges: [{ label: 'Duo' }, { label: 'Prize', isPrize: true }],
+                number: '02',
+            },
+        ],
+    },
+    {
+        id: 'mr-ms-engineer',
+        number: '05',
+        name: 'Mr. / Ms.',
+        nameHighlight: 'Engineer',
+        tag: 'Personality',
+        description:
+            'The ultimate test of an all-round engineering personality. Contestants are judged on technical knowledge, communication, aptitude, and overall presentation. Who has what it takes to be the face of engineering?',
+        info: [
+            { label: 'Date', value: 'April 2, 2026' },
+            { label: 'Venue', value: 'Main Auditorium, SVIST' },
+            { label: 'Format', value: 'Multi-Round Contest' },
+            { label: 'Open To', value: 'All Years' },
+        ],
+        cards: [
+            {
+                category: 'Round 1',
+                name: 'Technical Aptitude',
+                description: 'Written test on technical reasoning, aptitude, and subject knowledge.',
+                badges: [{ label: 'Elimination' }],
+                number: '01',
+            },
+            {
+                category: 'Round 2',
+                name: 'Group Discussion',
+                description: 'Debate a current technology topic. Showcase your communication and leadership.',
+                badges: [{ label: 'Shortlisted' }],
+                number: '02',
+            },
+            {
+                category: 'Round 3',
+                name: 'Final Stage Round',
+                description: 'Q&A with judges, personality assessment, and final scoring on stage.',
+                badges: [{ label: 'Grand Finale' }, { label: 'Crown + Prize', isPrize: true }],
+                number: '03',
+            },
+        ],
+    },
+    {
+        id: 'brain-buster',
+        number: '06',
+        name: 'Brain',
+        nameHighlight: 'Buster',
+        tag: 'Quiz',
+        description:
+            'A high-intensity quiz event spanning science, technology, general knowledge, current affairs, and pop culture. Fast buzzers, rapid-fire rounds, and elimination heats — only the sharpest minds survive.',
+        info: [
+            { label: 'Date', value: 'April 1, 2026' },
+            { label: 'Venue', value: 'Seminar Hall, SVIST' },
+            { label: 'Format', value: 'Buzzer + Written Rounds' },
+            { label: 'Teams', value: '2 Members' },
+        ],
+        cards: [
+            {
+                category: 'Round 1',
+                name: 'Written Qualifier',
+                description: 'Pen-and-paper qualifying round. Top teams advance to the buzzer stage.',
+                badges: [{ label: 'Elimination' }],
+                number: '01',
+            },
+            {
+                category: 'Round 2',
+                name: 'Rapid Fire Buzzer',
+                description: 'Head-to-head buzzer rounds with science, tech, and trivia questions.',
+                badges: [{ label: 'Live Buzzer' }],
+                number: '02',
+            },
+            {
+                category: 'Round 3',
+                name: 'Grand Finale',
+                description: 'Final showdown between the top 4 teams for the Brain Buster championship.',
+                badges: [{ label: 'Finals' }, { label: 'Prize', isPrize: true }],
+                number: '03',
+            },
+        ],
+    },
+    {
+        id: 'code-storm',
+        number: '07',
+        name: 'Code',
+        nameHighlight: 'Storm',
+        tag: 'Coding',
+        description:
+            'An electrifying competitive programming contest. Solve algorithmic challenges across varying difficulty levels under time pressure. From greedy algorithms to dynamic programming — the storm tests it all.',
+        info: [
+            { label: 'Date', value: 'April 1–2, 2026' },
+            { label: 'Venue', value: 'Computer Lab, SVIST' },
+            { label: 'Platform', value: 'Online Judge' },
+            { label: 'Solo / Duo', value: 'Open to All' },
+        ],
+        cards: [
+            {
+                category: 'Level 1',
+                name: 'Beginner Track',
+                description: 'Logical problems and basic data structures — perfect for first-year participants.',
+                badges: [{ label: 'All Years' }],
+                number: '01',
+            },
+            {
+                category: 'Level 2',
+                name: 'Intermediate Track',
+                description: 'Algorithms, graphs, and searching/sorting under a timed environment.',
+                badges: [{ label: 'CSE / IT' }],
+                number: '02',
+            },
+            {
+                category: 'Level 3',
+                name: 'Advanced Storm',
+                description: 'Hard competitive programming problems. Top scorers win the Code Storm title.',
+                badges: [{ label: 'Open to All' }, { label: 'Prize', isPrize: true }],
+                number: '03',
+            },
+        ],
+    },
+    {
+        id: 'commercial',
+        number: '08',
+        name: '',
+        nameHighlight: 'Commercial',
+        tag: 'Business & Management',
+        description:
+            'Test your business instincts, marketing acumen, and entrepreneurial thinking. The Commercial event challenges participants with case studies, mock pitches, and market simulation games.',
+        info: [
+            { label: 'Date', value: 'April 2, 2026' },
+            { label: 'Venue', value: 'Board Room, SVIST' },
+            { label: 'Format', value: 'Case Study + Pitch' },
+            { label: 'Teams', value: '2–3 Members' },
+        ],
+        cards: [
+            {
+                category: 'Round 1',
+                name: 'Case Study Analysis',
+                description: 'Analyse a real business case and present strategic recommendations.',
+                badges: [{ label: '45 Minutes' }],
+                number: '01',
+            },
+            {
+                category: 'Round 2',
+                name: 'Startup Pitch',
+                description: 'Pitch a startup idea to a panel of simulated investors in 5 minutes.',
+                badges: [{ label: '5 Min Pitch' }, { label: 'Prize', isPrize: true }],
+                number: '02',
+            },
+        ],
+    },
+    {
+        id: 'esports',
+        number: '09',
+        name: '',
+        nameHighlight: 'Esports',
+        tag: 'Gaming',
+        description:
+            'Compete in fast-paced esports tournaments across popular titles. Whether you\'re a mobile gamer or a PC warrior, Esports at Innovention 2026 has a battleground for you.',
+        info: [
+            { label: 'Date', value: 'April 1–2, 2026' },
+            { label: 'Venue', value: 'Gaming Zone, SVIST' },
+            { label: 'Format', value: 'Bracket Elimination' },
+            { label: 'Registration', value: 'Per Game Title' },
+        ],
+        cards: [
+            {
+                category: 'Title',
+                name: 'BGMI',
+                description: 'Squad-based battle royale. Top squads from qualifiers advance to the finals.',
+                badges: [{ label: 'Squad of 4' }, { label: 'Prize', isPrize: true }],
+                number: '01',
+            },
+            {
+                category: 'Title',
+                name: 'Valorant',
+                description: '5v5 tactical shooter — team-based bracket tournament with prize for top team.',
+                badges: [{ label: '5v5' }, { label: 'Prize', isPrize: true }],
+                number: '02',
+            },
+            {
+                category: 'Title',
+                name: 'FIFA / eFootball',
+                description: '1v1 football simulation knockout bracket. Prove you\'re the best on the virtual pitch.',
+                badges: [{ label: '1v1 Knockout' }, { label: 'Prize', isPrize: true }],
+                number: '03',
+            },
+        ],
+    },
+];
