@@ -4,7 +4,7 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'NEXUS — Tech Fest',
   description:
-    "Asia's Largest Science & Technology Festival — NEXUS 2025 at XYZ Institute of Technology. March 14–16, 2025.",
+    "Asia's Largest Science & Technology Festival — NEXUS 2025 at Swami Vivekananda Institute of Science and Technology. March 14–16, 2025.",
   keywords: [
     'NEXUS',
     'Tech Fest',

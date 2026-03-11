@@ -17,7 +17,7 @@ export default function TopNav({ onNavigate }: TopNavProps) {
                     onNavigate('home');
                 }}
             >
-                NX
+                <img src="/Innovention.svg" alt="Innovention" />
             </a>
             <ul className="top-nav-links">
                 {topNavLinks.map((link) => (

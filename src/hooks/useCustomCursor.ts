@@ -22,9 +22,34 @@ export function useCustomCursor() {
             }
         };
 
+        const handleMouseEnter = () => {
+            if (curRef.current) curRef.current.classList.add('hovering');
+            if (cur2Ref.current) cur2Ref.current.classList.add('hovering');
+        };
+        const handleMouseLeave = () => {
+            if (curRef.current) curRef.current.classList.remove('hovering');
+            if (cur2Ref.current) cur2Ref.current.classList.remove('hovering');
+        };
+
+        const addListeners = () => {
+            const clickables = document.querySelectorAll('a, button, .clickable');
+            clickables.forEach(el => {
+                el.addEventListener('mouseenter', handleMouseEnter);
+                el.addEventListener('mouseleave', handleMouseLeave);
+            });
+        };
+
+        const removeListeners = () => {
+            const clickables = document.querySelectorAll('a, button, .clickable');
+            clickables.forEach(el => {
+                el.removeEventListener('mouseenter', handleMouseEnter);
+                el.removeEventListener('mouseleave', handleMouseLeave);
+            });
+        };
+
         const loop = () => {
-            tx += (mx - tx) * 0.1;
-            ty += (my - ty) * 0.1;
+            tx += (mx - tx) * 0.2;
+            ty += (my - ty) * 0.2;
             if (cur2Ref.current) {
                 cur2Ref.current.style.left = tx + 'px';
                 cur2Ref.current.style.top = ty + 'px';
@@ -33,10 +58,20 @@ export function useCustomCursor() {
         };
 
         document.addEventListener('mousemove', handleMouseMove);
+        addListeners();
         animId = requestAnimationFrame(loop);
+
+        // Re-calculate on DOM changes to catch new elements (e.g. navigation)
+        const observer = new MutationObserver(() => {
+            removeListeners();
+            addListeners();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
 
         return () => {
             document.removeEventListener('mousemove', handleMouseMove);
+            removeListeners();
+            observer.disconnect();
             cancelAnimationFrame(animId);
         };
     }, []);

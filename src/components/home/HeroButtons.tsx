@@ -20,7 +20,7 @@ export default function HeroButtons({ onNavigate }: HeroButtonsProps) {
                 className="btn btn-pink"
                 onClick={(e) => {
                     e.preventDefault();
-                    onNavigate('contact');
+                    onNavigate('registration');
                 }}
             >
                 Register Now

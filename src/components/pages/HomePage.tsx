@@ -1,7 +1,6 @@
 import SponsorTag from '@/components/home/SponsorTag';
 import GlitchTitle from '@/components/home/GlitchTitle';
 import DateLine from '@/components/home/DateLine';
-import Tagline from '@/components/home/Tagline';
 import Countdown from '@/components/home/Countdown';
 import HeroButtons from '@/components/home/HeroButtons';
 
@@ -19,7 +18,6 @@ export default function HomePage({ isActive, onNavigate }: HomePageProps) {
             <SponsorTag />
             <GlitchTitle text="Innovation" />
             <DateLine />
-            <Tagline />
             <Countdown />
             <HeroButtons onNavigate={onNavigate} />
         </div>

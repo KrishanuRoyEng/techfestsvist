@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 
 import CustomCursor from '@/components/cursor/CustomCursor';
 import CityCanvas from '@/components/canvas/CityCanvas';
-import CornerBrackets from '@/components/layout/CornerBrackets';
 import TopNav from '@/components/layout/TopNav';
 import SideNavLeft from '@/components/layout/SideNavLeft';
 import SideNavRight from '@/components/layout/SideNavRight';
@@ -12,6 +11,9 @@ import EventsFlyout from '@/components/layout/EventsFlyout';
 import HomePage from '@/components/pages/HomePage';
 import EventsPage from '@/components/pages/EventsPage';
 import SimplePage from '@/components/pages/SimplePage';
+import RegistrationPage from '@/components/pages/RegistrationPage';
+import GalleryPage from '@/components/pages/GalleryPage';
+import ContactPage from '@/components/pages/ContactPage';
 import { simplePages } from '@/data/simplePages';
 
 export default function Page() {
@@ -27,9 +29,29 @@ export default function Page() {
     (page: string) => {
       setActivePage(page);
       closeFlyout();
+      if (typeof window !== 'undefined') {
+        window.history.pushState(null, '', `#${page}`);
+      }
     },
     [closeFlyout]
   );
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        setActivePage(hash);
+      } else {
+        setActivePage('home');
+      }
+    };
+
+    // Initial check
+    handleHashChange();
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const toggleFlyout = useCallback(
     (e: React.MouseEvent) => {
@@ -59,7 +81,6 @@ export default function Page() {
     <div onClick={closeFlyout}>
       <CustomCursor />
       <CityCanvas />
-      <CornerBrackets />
 
       {/* Navigation */}
       <TopNav onNavigate={navigate} />
@@ -89,6 +110,9 @@ export default function Page() {
           onNavigate={navigate}
         />
       ))}
+      <RegistrationPage isActive={activePage === 'registration'} />
+      <GalleryPage isActive={activePage === 'gallery'} />
+      <ContactPage isActive={activePage === 'contact'} />
     </div>
   );
 }

@@ -29,6 +29,11 @@ export default function SideNavLeft({
                         className={`side-icon${isActive ? ' active' : ''}`}
                         id={item.id}
                         href="#"
+                        onMouseEnter={(e) => {
+                            if (item.isFlyout && !flyoutOpen) {
+                                onToggleFlyout(e as unknown as React.MouseEvent);
+                            }
+                        }}
                         onClick={(e) => {
                             e.preventDefault();
                             if (item.isFlyout) {

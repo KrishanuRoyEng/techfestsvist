@@ -3,8 +3,8 @@ export default function DateLine() {
         <div className="date-line">
             <div className="dash" />
             <span>
-                <span className="date-num">12</span>th –{' '}
-                <span className="date-num">14</span>th April
+                <span className="date-num">1</span>st –{' '}
+                <span className="date-num">2</span>nd April
             </span>
             &nbsp;
             <span>

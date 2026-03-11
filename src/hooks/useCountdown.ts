@@ -24,9 +24,17 @@ export function useCountdown(targetDate: string): CountdownValues {
         };
     }, [targetDate]);
 
-    const [values, setValues] = useState<CountdownValues>(calculate);
+    const [values, setValues] = useState<CountdownValues>({
+        days: '00',
+        hours: '00',
+        mins: '00',
+        secs: '00',
+    });
 
     useEffect(() => {
+        // Initial calculation on mount
+        setValues(calculate());
+
         const interval = setInterval(() => {
             setValues(calculate());
         }, 1000);
