@@ -2,11 +2,12 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'NEXUS — Tech Fest',
+  title: 'Innovention — Tech Fest',
   description:
-    "Asia's Largest Science & Technology Festival — NEXUS 2025 at Swami Vivekananda Institute of Science and Technology. March 14–16, 2025.",
+    "Asia's Largest Science & Technology Festival — Innovention 2026 at Swami Vivekananda Institute of Science and Technology. April 1–2, 2026.",
   keywords: [
-    'NEXUS',
+    'SVIST',
+    'Swami Vivekananda Institute of Science and Technology',
     'Tech Fest',
     'Science Festival',
     'Technology Festival',

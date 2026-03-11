@@ -16,9 +16,10 @@
   --dark: #04020f;
 }
 
-html,
-* {
-  cursor: none !important;
+@media (hover: hover) and (pointer: fine) {
+  html, * {
+    cursor: none !important;
+  }
 }
 
 body {
@@ -93,6 +94,12 @@ body {
 
 #cur.hovering {
   transform: translate(-50%, -50%) scale(0.6);
+}
+
+@media (max-width: 768px) {
+  #cur, #cur2 {
+    display: none !important;
+  }
 }
 
 /* ── CANVAS ── */
@@ -376,11 +383,22 @@ body::before {
   align-items: center;
   gap: 0.6rem;
   font-family: 'Rajdhani', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   letter-spacing: 2px;
   color: rgba(255, 255, 255, 0.7);
   margin-bottom: 0.6rem;
   animation: fadeIn 0.8s ease both;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .sponsor-tag {
+    font-size: 0.55rem;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0 1rem;
+    margin-bottom: 1.5rem;
+  }
 }
 
 .sponsor-dot {

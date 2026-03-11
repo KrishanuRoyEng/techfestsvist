@@ -53,6 +53,15 @@ export default function Page() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  useEffect(() => {
+    if (activePage === 'home') {
+      document.title = 'Innovention — Tech Fest';
+    } else {
+      const pageTitle = activePage.charAt(0).toUpperCase() + activePage.slice(1);
+      document.title = `Innovention — ${pageTitle}`;
+    }
+  }, [activePage]);
+
   const toggleFlyout = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
