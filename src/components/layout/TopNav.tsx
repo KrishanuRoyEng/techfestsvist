@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { topNavLinks } from '@/data/navigation';
 
 interface TopNavProps {
@@ -18,7 +19,14 @@ export default function TopNav({ onNavigate }: TopNavProps) {
                 }}
             >
                 <div className="logo-pulse-wrap">
-                    <img src="/Logo.svg" alt="Innovention-Logo" className="pulse-logo" />
+                    <Image 
+                        src="/Logo.svg" 
+                        alt="Innovention Logo" 
+                        className="pulse-logo" 
+                        width={180} 
+                        height={48} 
+                        priority 
+                    />
                 </div>
             </a>
             <ul className="top-nav-links">

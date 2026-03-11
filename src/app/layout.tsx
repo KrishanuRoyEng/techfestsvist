@@ -1,7 +1,29 @@
 import type { Metadata } from 'next';
+import { Orbitron, Rajdhani, Black_Ops_One } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
+
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['400', '700', '900'],
+  variable: '--font-orbitron',
+  display: 'swap',
+});
+
+const rajdhani = Rajdhani({
+  subsets: ['latin'],
+  weight: ['300', '400', '600', '700'],
+  variable: '--font-rajdhani',
+  display: 'swap',
+});
+
+const blackOpsOne = Black_Ops_One({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-black-ops',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Innovention — Tech Fest',
@@ -26,13 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Black+Ops+One&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`${orbitron.variable} ${rajdhani.variable} ${blackOpsOne.variable}`}>
       <body>
         {children}
         <Analytics />

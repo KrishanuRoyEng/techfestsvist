@@ -114,7 +114,7 @@ export default function Page() {
       <CustomCursor />
       <CityCanvas />
 
-      {/* Navigation */}
+      {/* Navigation Layer */}
       <TopNav onNavigate={navigate} />
       
       <SideNavLeft
@@ -136,7 +136,7 @@ export default function Page() {
 
       <SideNavRight />
 
-      {/* Pages */}
+      {/* Pages Layer */}
       <HomePage isActive={activePage === 'home'} onNavigate={navigate} />
       <EventsPage
         isActive={activePage === 'events'}

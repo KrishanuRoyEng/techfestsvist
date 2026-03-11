@@ -5,7 +5,6 @@ import {
     BackgroundBuilding,
 } from '@/types';
 
-// ── Neon Colors ──
 const PINK = '#ff2d9b';
 const CYAN = '#00f0ff';
 const PURPLE = '#9b30ff';
@@ -16,14 +15,12 @@ function randomColor(): string {
     return neonCols[Math.floor(Math.random() * neonCols.length)];
 }
 
-// ── Build City Data ──
 export function buildCityData(W: number, H: number) {
     const stars: Star[] = [];
     const flyP: FlyingParticle[] = [];
     const bgBuildings: BackgroundBuilding[] = [];
     const buildings: Building[] = [];
 
-    // Stars
     for (let i = 0; i < 200; i++) {
         stars.push({
             x: Math.random() * W,
@@ -34,7 +31,6 @@ export function buildCityData(W: number, H: number) {
         });
     }
 
-    // Flying particles
     for (let i = 0; i < 8; i++) {
         flyP.push({
             x: Math.random() * W,
@@ -46,31 +42,28 @@ export function buildCityData(W: number, H: number) {
         });
     }
 
-    // Background buildings
-    for (let i = 0; i < Math.floor(W / 30); i++) {
+    const bgCount = Math.floor(W / 30);
+    for (let i = 0; i < bgCount; i++) {
         const bw = Math.random() * 60 + 25;
         const bh = Math.random() * (H * 0.35) + H * 0.1;
         const bx = Math.random() * W;
-        const col = randomColor();
-        const ho = Math.random() > 0.4;
         bgBuildings.push({
             x: bx,
             w: bw,
             h: bh,
-            col,
-            ho,
+            col: randomColor(),
+            ho: Math.random() > 0.4,
             wc: randomColor(),
             sh: Math.floor(Math.random() * 4),
         });
     }
 
-    // Foreground buildings
     let x = 0;
     while (x < W + 80) {
         const bw = Math.random() * 100 + 40;
         const bh = Math.random() * (H * 0.55) + H * 0.2;
         const wc = randomColor();
-        const wins: { r: number; c: number; on: boolean; fl: boolean; ph: number }[] = [];
+        const wins = [];
         const wr = Math.floor(bh / 18);
         const wc2 = Math.floor(bw / 14);
         for (let r = 0; r < wr; r++) {
@@ -102,7 +95,6 @@ export function buildCityData(W: number, H: number) {
     return { stars, flyP, bgBuildings, buildings };
 }
 
-// ── Draw Building Shape ──
 export function drawBuildingShape(
     ctx: CanvasRenderingContext2D,
     x: number,
@@ -159,7 +151,6 @@ export function drawBuildingShape(
     }
 }
 
-// ── Main Draw Frame ──
 export function drawFrame(
     cx: CanvasRenderingContext2D,
     W: number,
@@ -172,7 +163,6 @@ export function drawFrame(
 ) {
     cx.clearRect(0, 0, W, H);
 
-    // Sky gradient
     const sky = cx.createLinearGradient(0, 0, 0, H);
     sky.addColorStop(0, '#020008');
     sky.addColorStop(0.3, '#0a0025');
@@ -183,7 +173,6 @@ export function drawFrame(
     cx.fillStyle = sky;
     cx.fillRect(0, 0, W, H);
 
-    // Horizon glow
     const hg = cx.createRadialGradient(W / 2, H * 0.62, 0, W / 2, H * 0.62, W * 0.7);
     hg.addColorStop(0, 'rgba(155,48,255,.18)');
     hg.addColorStop(0.4, 'rgba(255,45,155,.1)');
@@ -192,7 +181,6 @@ export function drawFrame(
     cx.fillStyle = hg;
     cx.fillRect(0, 0, W, H);
 
-    // Stars
     stars.forEach((s) => {
         cx.beginPath();
         cx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
@@ -200,7 +188,6 @@ export function drawFrame(
         cx.fill();
     });
 
-    // Background buildings
     bgBuildings.forEach((b) => {
         const by = H - b.h;
         cx.fillStyle = 'rgba(2,0,10,.85)';
@@ -216,7 +203,6 @@ export function drawFrame(
         }
     });
 
-    // Foreground buildings
     buildings.forEach((b) => {
         const bg = cx.createLinearGradient(b.x, b.y, b.x + b.w, b.y + b.h);
         bg.addColorStop(0, 'rgba(8,4,20,.98)');
@@ -225,7 +211,6 @@ export function drawFrame(
         drawBuildingShape(cx, b.x, b.y, b.w, b.h, b.sh);
         cx.fill();
 
-        // Neon outline
         if (b.ne) {
             cx.save();
             cx.shadowColor = b.ec;
@@ -238,7 +223,6 @@ export function drawFrame(
             cx.restore();
         }
 
-        // Windows
         b.wins.forEach((w) => {
             if (!w.on) return;
             const fa = w.fl ? 0.5 + 0.5 * Math.sin(t * 3 + w.ph) : 1;
@@ -254,7 +238,6 @@ export function drawFrame(
             cx.restore();
         });
 
-        // Antenna
         if (b.ant) {
             const ax = b.x + b.w / 2;
             const ah = 15;
@@ -276,7 +259,6 @@ export function drawFrame(
         }
     });
 
-    // Horizon line
     cx.save();
     cx.shadowColor = PINK;
     cx.shadowBlur = 20;
@@ -288,7 +270,6 @@ export function drawFrame(
     cx.stroke();
     cx.restore();
 
-    // Flying particles
     flyP.forEach((p) => {
         p.x += p.vx;
         if (p.x > W + 100) p.x = -100;

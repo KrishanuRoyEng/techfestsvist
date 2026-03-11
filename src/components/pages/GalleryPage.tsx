@@ -10,34 +10,11 @@ export default function GalleryPage({ isActive }: GalleryPageProps) {
             <h1 className="sp-title">
                 Event <span>Gallery</span>
             </h1>
-            <div className="sp-sub">// Moments from Past Technical Feats</div>
+            <div className="sp-sub">Moments from Past Technical Feats</div>
             
-            <div className="gallery-grid" style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-                gap: '1rem',
-                width: '80%',
-                maxHeight: '50vh',
-                overflowY: 'auto',
-                marginTop: '1rem',
-                padding: '1rem'
-            }}>
-                {/* Placeholders for dynamic content */}
+            <div className="gallery-grid">
                 {[...Array(8)].map((_, i) => (
-                    <div key={i} className="gallery-item-placeholder" style={{
-                        aspectRatio: '4/3',
-                        background: 'rgba(0, 240, 255, 0.05)',
-                        border: '1px solid rgba(0, 240, 255, 0.15)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: 'rgba(255, 255, 255, 0.2)',
-                        fontFamily: "'Orbitron', monospace",
-                        textTransform: 'uppercase',
-                        fontSize: '0.6rem',
-                        letterSpacing: '2px',
-                        boxShadow: 'inset 0 0 20px rgba(0, 240, 255, 0.05)'
-                    }}>
+                    <div key={i} className="gallery-item-placeholder">
                         Image Slot {i + 1}
                     </div>
                 ))}

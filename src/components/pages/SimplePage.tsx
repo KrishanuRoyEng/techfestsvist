@@ -7,7 +7,6 @@ interface SimplePageProps {
 }
 
 export default function SimplePage({ data, isActive, onNavigate }: SimplePageProps) {
-    // Some pages have HTML content (e.g. sponsors page)
     const isHtml = data.content.includes('<');
 
     return (

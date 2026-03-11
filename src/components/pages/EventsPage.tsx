@@ -20,7 +20,7 @@ const EventsPage = forwardRef<HTMLDivElement, EventsPageProps>(
                     Event <span>Categories</span>
                 </div>
                 <div className="ep-sub">
-          // NEXUS 2025 · All Competitions &amp; Programs
+                    Innovention 2026 · Competitions &amp; Programs
                 </div>
                 <div className="ep-divider" />
 
