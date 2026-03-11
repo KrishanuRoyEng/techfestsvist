@@ -30,7 +30,8 @@ export default function SideNavLeft({
                         id={item.id}
                         href="#"
                         onMouseEnter={(e) => {
-                            if (item.isFlyout && !flyoutOpen) {
+                            const isDesktop = window.matchMedia('(pointer: fine)').matches;
+                            if (isDesktop && item.isFlyout && !flyoutOpen) {
                                 onToggleFlyout(e as unknown as React.MouseEvent);
                             }
                         }}

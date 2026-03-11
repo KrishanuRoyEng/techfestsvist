@@ -8,6 +8,7 @@ import TopNav from '@/components/layout/TopNav';
 import SideNavLeft from '@/components/layout/SideNavLeft';
 import SideNavRight from '@/components/layout/SideNavRight';
 import EventsFlyout from '@/components/layout/EventsFlyout';
+import MobileMenu from '@/components/layout/MobileMenu';
 import HomePage from '@/components/pages/HomePage';
 import EventsPage from '@/components/pages/EventsPage';
 import SimplePage from '@/components/pages/SimplePage';
@@ -122,6 +123,7 @@ export default function Page() {
       <RegistrationPage isActive={activePage === 'registration'} />
       <GalleryPage isActive={activePage === 'gallery'} />
       <ContactPage isActive={activePage === 'contact'} />
+      <MobileMenu onNavigate={navigate} />
     </div>
   );
 }
