@@ -48,8 +48,8 @@ export function useCustomCursor() {
         };
 
         const loop = () => {
-            tx += (mx - tx) * 0.2;
-            ty += (my - ty) * 0.2;
+            tx += (mx - tx) * 0.4;
+            ty += (my - ty) * 0.4;
             if (cur2Ref.current) {
                 cur2Ref.current.style.left = tx + 'px';
                 cur2Ref.current.style.top = ty + 'px';

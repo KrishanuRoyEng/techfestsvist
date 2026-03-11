@@ -17,7 +17,9 @@ export default function TopNav({ onNavigate }: TopNavProps) {
                     onNavigate('home');
                 }}
             >
-                <img src="/Innovention.svg" alt="Innovention" />
+                <div className="logo-pulse-wrap">
+                    <img src="/Logo.svg" alt="Innovention-Logo" className="pulse-logo" />
+                </div>
             </a>
             <ul className="top-nav-links">
                 {topNavLinks.map((link) => (

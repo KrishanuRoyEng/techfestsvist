@@ -21,9 +21,24 @@ export default function Page() {
   const [activePage, setActivePage] = useState('home');
   const [flyoutOpen, setFlyoutOpen] = useState(false);
   const eventsPageRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const closeFlyout = useCallback(() => {
     setFlyoutOpen(false);
+  }, []);
+
+  const closeFlyoutDebounced = useCallback(() => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = setTimeout(() => {
+      setFlyoutOpen(false);
+    }, 300); // 300ms grace period
+  }, []);
+
+  const cancelClose = useCallback(() => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
   }, []);
 
   const navigate = useCallback(
@@ -47,11 +62,12 @@ export default function Page() {
       }
     };
 
-    // Initial check
     handleHashChange();
-
     window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    };
   }, []);
 
   useEffect(() => {
@@ -63,12 +79,18 @@ export default function Page() {
     }
   }, [activePage]);
 
+  const openFlyout = useCallback(() => {
+    cancelClose();
+    setFlyoutOpen(true);
+  }, [cancelClose]);
+
   const toggleFlyout = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
+      cancelClose();
       setFlyoutOpen((prev) => !prev);
     },
-    []
+    [cancelClose]
   );
 
   const navigateToEvent = useCallback(
@@ -94,17 +116,25 @@ export default function Page() {
 
       {/* Navigation */}
       <TopNav onNavigate={navigate} />
+      
       <SideNavLeft
         activePage={activePage}
         onNavigate={navigate}
+        onOpenFlyout={openFlyout}
         onToggleFlyout={toggleFlyout}
+        onMouseEnter={cancelClose}
+        onMouseLeave={closeFlyoutDebounced}
         flyoutOpen={flyoutOpen}
       />
-      <SideNavRight />
       <EventsFlyout
         isOpen={flyoutOpen}
         onNavigateToEvent={navigateToEvent}
+        onClose={closeFlyout}
+        onMouseEnter={cancelClose}
+        onMouseLeave={closeFlyoutDebounced}
       />
+
+      <SideNavRight />
 
       {/* Pages */}
       <HomePage isActive={activePage === 'home'} onNavigate={navigate} />

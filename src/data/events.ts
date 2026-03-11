@@ -132,8 +132,8 @@ export const eventSections: EventSectionData[] = [
         cards: [
             {
                 category: 'Challenge',
-                name: 'Bridge Building',
-                description: 'Build the strongest bridge using limited materials. Load tested at the end.',
+                name: 'Origami War',
+                description: 'Build the best origami using limited materials. Unique till the end.',
                 badges: [{ label: 'Solo' }, { label: 'Prize', isPrize: true }],
                 number: '01',
             },

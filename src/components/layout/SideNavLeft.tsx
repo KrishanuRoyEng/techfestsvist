@@ -5,18 +5,28 @@ import { sideNavItems } from '@/data/navigation';
 interface SideNavLeftProps {
     activePage: string;
     onNavigate: (page: string) => void;
+    onOpenFlyout: () => void;
     onToggleFlyout: (e: React.MouseEvent) => void;
+    onMouseEnter: () => void;
+    onMouseLeave: () => void;
     flyoutOpen: boolean;
 }
 
 export default function SideNavLeft({
     activePage,
     onNavigate,
+    onOpenFlyout,
     onToggleFlyout,
+    onMouseEnter,
+    onMouseLeave,
     flyoutOpen,
 }: SideNavLeftProps) {
     return (
-        <nav className="side-nav-left">
+        <nav 
+            className="side-nav-left"
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+        >
             {sideNavItems.map((item) => {
                 const isActive =
                     item.id === 'sn-events'
@@ -29,10 +39,10 @@ export default function SideNavLeft({
                         className={`side-icon${isActive ? ' active' : ''}`}
                         id={item.id}
                         href="#"
-                        onMouseEnter={(e) => {
+                        onMouseEnter={() => {
                             const isDesktop = window.matchMedia('(pointer: fine)').matches;
-                            if (isDesktop && item.isFlyout && !flyoutOpen) {
-                                onToggleFlyout(e as unknown as React.MouseEvent);
+                            if (isDesktop && item.isFlyout) {
+                                onOpenFlyout();
                             }
                         }}
                         onClick={(e) => {
