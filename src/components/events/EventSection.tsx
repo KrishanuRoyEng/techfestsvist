@@ -1,11 +1,12 @@
-import { EventSectionData } from '@/types';
+import { EventSectionData, EventCardData } from '@/types';
 import EventCard from './EventCard';
 
 interface EventSectionProps {
     section: EventSectionData;
+    onRegister?: (card: EventCardData, accent: string) => void;
 }
 
-export default function EventSection({ section }: EventSectionProps) {
+export default function EventSection({ section, onRegister }: EventSectionProps) {
     return (
         <div className={`ev-section section-${section.id}`} id={`ev-${section.id}`}>
             <div className="ev-head">
@@ -26,9 +27,28 @@ export default function EventSection({ section }: EventSectionProps) {
             </div>
             <div className="ev-cards">
                 {section.cards.map((card) => (
-                    <EventCard key={card.number} card={card} />
+                    <EventCard 
+                        key={card.number} 
+                        card={card} 
+                        onRegister={(c) => onRegister?.(c, `var(--ev-${getAccentColor(section.id)})`)} 
+                    />
                 ))}
             </div>
         </div>
     );
+}
+
+function getAccentColor(id: string) {
+    const map: Record<string, string> = {
+        techtrix: 'cyan',
+        robotics: 'purple',
+        createx: 'pink',
+        craftomania: 'gold',
+        'mr-ms-engineer': 'green',
+        'brain-buster': 'orange',
+        'code-storm': 'blue',
+        commercial: 'green',
+        gaming: 'pink'
+    };
+    return map[id] || 'cyan';
 }

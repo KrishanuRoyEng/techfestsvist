@@ -2,9 +2,10 @@ import { EventCardData } from '@/types';
 
 interface EventCardProps {
     card: EventCardData;
+    onRegister?: (card: EventCardData) => void;
 }
 
-export default function EventCard({ card }: EventCardProps) {
+export default function EventCard({ card, onRegister }: EventCardProps) {
     return (
         <div className="ev-card">
             <div className="ec-cat">{card.category}</div>
@@ -15,6 +16,7 @@ export default function EventCard({ card }: EventCardProps) {
                     <span
                         key={i}
                         className={`ec-badge${badge.isPrize ? ' prize' : ''}`}
+                        onClick={badge.isPrize ? () => onRegister?.(card) : undefined}
                     >
                         {badge.label}
                     </span>

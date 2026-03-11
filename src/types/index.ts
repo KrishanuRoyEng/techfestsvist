@@ -25,6 +25,8 @@ export interface EventCardData {
     description: string;
     badges: Badge[];
     number: string;
+    regLink?: string;
+    qrCode?: string;
 }
 
 export interface Badge {
