@@ -523,15 +523,25 @@ body::before {
 /* ── GLITCH LOGO ── */
 .glitch-logo-container {
   position: relative;
-  height: 120px;
-  width: auto;
-  margin-bottom: 1.5rem;
+  height: clamp(80px, 15vw, 160px);
+  width: 90vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
   animation: fadeIn 1s 0.3s ease both;
+}
+
+.glitch-logo-inner {
+  position: relative;
+  height: 100%;
+  display: inline-block;
 }
 
 .glitch-logo {
   height: 100%;
   width: auto;
+  max-width: 100%;
   object-fit: contain;
 }
 
@@ -1611,11 +1621,11 @@ body::before {
 
 .menu-header {
   font-family: 'Orbitron', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 5px;
+  font-size: 0.65rem;
+  letter-spacing: 4px;
   color: var(--cyan);
-  margin-bottom: 3rem;
-  opacity: 0.5;
+  margin-bottom: 1.5rem;
+  opacity: 0.4;
 }
 
 .menu-list {
@@ -1625,7 +1635,7 @@ body::before {
 }
 
 .menu-list li {
-  margin-bottom: 2rem;
+  margin-bottom: 0.8rem;
   transform: translateY(20px);
   opacity: 0;
   transition: all 0.4s ease;
@@ -1640,7 +1650,7 @@ body::before {
 
 .menu-list a {
   font-family: 'Orbitron', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: white;
   text-decoration: none;
@@ -1649,11 +1659,11 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 1rem;
-  padding: 0.8rem 1.2rem;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 8px;
-  border: 1px solid transparent;
+  gap: 1.2rem;
+  padding: 0.6rem 0.5rem;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0;
 }
 
 .menu-icon {

@@ -8,9 +8,11 @@ export default function GlitchTitle({ text, logo }: GlitchTitleProps) {
         <div className="title-wrap">
             {logo ? (
                 <div className="glitch-logo-container">
-                    <img src={logo} alt="Innovention" className="glitch-logo g-main" />
-                    <img src={logo} alt="" className="glitch-logo g-after" />
-                    <img src={logo} alt="" className="glitch-logo g-before" />
+                    <div className="glitch-logo-inner">
+                        <img src={logo} alt="Innovention" className="glitch-logo g-main" />
+                        <img src={logo} alt="" className="glitch-logo g-after" />
+                        <img src={logo} alt="" className="glitch-logo g-before" />
+                    </div>
                 </div>
             ) : (
                 <div className="glitch-title" data-text={text}>
