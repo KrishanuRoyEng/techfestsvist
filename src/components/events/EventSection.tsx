@@ -7,7 +7,7 @@ interface EventSectionProps {
 
 export default function EventSection({ section }: EventSectionProps) {
     return (
-        <div className="ev-section" id={`ev-${section.id}`}>
+        <div className={`ev-section section-${section.id}`} id={`ev-${section.id}`}>
             <div className="ev-head">
                 <span className="ev-num">{section.number}</span>
                 <span className="ev-name">

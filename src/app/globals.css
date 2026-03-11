@@ -14,6 +14,14 @@
   --purple: #9b30ff;
   --orange: #ff6a00;
   --dark: #04020f;
+  /* Event Accents */
+  --ev-cyan: #00f0ff;
+  --ev-purple: #9b30ff;
+  --ev-pink: #ff2d9b;
+  --ev-gold: #ffb800;
+  --ev-green: #00ff75;
+  --ev-orange: #ff8a00;
+  --ev-blue: #0075ff;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -725,32 +733,44 @@ body::before {
 }
 
 .ev-section {
-  margin-bottom: 5rem;
+  margin-bottom: 6rem;
   scroll-margin-top: 100px;
+  --accent: var(--ev-cyan); /* Default */
 }
+
+.section-techtrix { --accent: var(--ev-cyan); }
+.section-robotics { --accent: var(--ev-green); }
+.section-createx { --accent: var(--ev-pink); }
+.section-craftomania { --accent: var(--ev-orange); }
+.section-mr-ms-engineer { --accent: var(--ev-gold); }
+.section-brain-buster { --accent: var(--ev-purple); }
+.section-code-storm { --accent: var(--ev-blue); }
+.section-commercial { --accent: var(--ev-green); }
+.section-esports { --accent: var(--ev-pink); }
 
 .ev-head {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .ev-num {
   font-family: 'Orbitron', monospace;
-  font-size: 0.55rem;
+  font-size: 0.65rem;
   letter-spacing: 3px;
-  color: var(--purple);
-  background: rgba(155, 48, 255, 0.1);
-  padding: 0.25rem 0.6rem;
-  border: 1px solid rgba(155, 48, 255, 0.25);
+  color: var(--accent);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--accent);
+  opacity: 0.9;
 }
 
 .ev-name {
   font-family: 'Orbitron', monospace;
-  font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
   font-weight: 700;
   letter-spacing: 2px;
   color: white;
@@ -758,39 +778,43 @@ body::before {
 }
 
 .ev-name span {
-  color: var(--cyan);
+  color: var(--accent);
+  text-shadow: 0 0 20px rgba(var(--accent-rgb), 0.3);
 }
+
+.section-techtrix .ev-name span { text-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
 
 .ev-tag {
   margin-left: auto;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.7rem;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.6rem;
   letter-spacing: 3px;
-  color: rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 0.2rem 0.6rem;
+  color: var(--accent);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 1rem;
   text-transform: uppercase;
   white-space: nowrap;
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .ev-desc {
   font-family: 'Rajdhani', sans-serif;
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.45);
-  line-height: 1.8;
-  margin-bottom: 1.2rem;
-  max-width: 680px;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  max-width: 800px;
 }
 
 .ev-info {
   display: flex;
-  gap: 2.5rem;
+  gap: 3rem;
   flex-wrap: wrap;
-  background: rgba(0, 240, 255, 0.03);
-  border: 1px solid rgba(0, 240, 255, 0.1);
-  border-left: 3px solid var(--cyan);
-  padding: 0.8rem 1.2rem;
-  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: 4px solid var(--accent);
+  padding: 1.2rem 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .ev-info-item {
@@ -810,18 +834,18 @@ body::before {
 
 .ev-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
 .ev-card {
-  background: rgba(6, 2, 18, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  padding: 1.3rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 1.8rem;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.3s, transform 0.3s, background 0.3s;
-  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  border-left: 2px solid var(--accent);
 }
 
 .ev-card::before {
@@ -830,83 +854,93 @@ body::before {
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(to right, var(--cyan), var(--purple));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
 }
 
 .ev-card:hover {
-  border-color: rgba(0, 240, 255, 0.25);
-  transform: translateY(-3px);
-  background: rgba(0, 240, 255, 0.03);
+  border-color: var(--accent);
+  transform: translateY(-8px) scale(1.02);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px var(--accent);
 }
 
 .ev-card:hover::before {
-  transform: scaleX(1);
+  opacity: 1;
 }
 
 .ec-cat {
   font-family: 'Orbitron', monospace;
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   letter-spacing: 3px;
-  color: rgba(0, 240, 255, 0.6);
+  color: var(--accent);
   text-transform: uppercase;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.8rem;
+  opacity: 0.7;
 }
 
 .ec-name {
   font-family: 'Orbitron', monospace;
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   color: white;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
   text-transform: uppercase;
 }
 
 .ec-desc {
   font-family: 'Rajdhani', sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.4);
-  line-height: 1.55;
-  margin-bottom: 0.8rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
 }
 
 .ec-meta {
   display: flex;
   gap: 0.7rem;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
 }
 
 .ec-badge {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.68rem;
-  letter-spacing: 1.5px;
-  color: rgba(255, 255, 255, 0.35);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  padding: 0.18rem 0.55rem;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.7rem;
   text-transform: uppercase;
 }
 
 .ec-badge.prize {
-  color: var(--cyan);
-  border-color: rgba(0, 240, 255, 0.2);
-  background: rgba(0, 240, 255, 0.04);
+  color: var(--dark);
+  border-color: var(--accent);
+  background: var(--accent);
+  font-weight: 700;
 }
 
 .ec-num-bg {
   position: absolute;
-  bottom: 0.5rem;
-  right: 0.8rem;
-  font-family: 'Orbitron', monospace;
-  font-size: 2.8rem;
-  font-weight: 900;
-  color: rgba(0, 240, 255, 0.03);
+  top: -10%;
+  right: -5%;
+  font-family: 'Black Ops One', cursive;
+  font-size: 8rem;
+  color: rgba(255, 255, 255, 0.03);
   line-height: 1;
   pointer-events: none;
+  z-index: 0;
+  transition: all 0.4s;
+}
+
+.ev-card:hover .ec-num-bg {
+  color: rgba(255, 255, 255, 0.05);
+  transform: scale(1.1) translate(-10%, 10%);
 }
 
 /* ═══ SIMPLE PAGES ═══ */
@@ -1194,7 +1228,30 @@ body::before {
   }
   .ev-info {
     flex-direction: column;
+    gap: 1.2rem;
+    padding: 1rem 1.2rem;
+    border-left-width: 3px;
+  }
+  .ev-info-item {
+    font-size: 0.8rem;
+  }
+  .ev-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+  .ev-tag {
+    margin-left: 0;
+  }
+  .ev-cards {
+    grid-template-columns: 1fr;
     gap: 1rem;
+  }
+  .ev-card {
+    padding: 1.4rem;
+  }
+  .ec-name {
+    font-size: 1rem;
   }
 }
 

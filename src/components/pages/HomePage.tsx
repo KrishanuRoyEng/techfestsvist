@@ -16,7 +16,7 @@ export default function HomePage({ isActive, onNavigate }: HomePageProps) {
             id="page-home"
         >
             <SponsorTag />
-            <GlitchTitle text="Innovation" />
+            <GlitchTitle text="Innovention" />
             <DateLine />
             <Countdown />
             <HeroButtons onNavigate={onNavigate} />
