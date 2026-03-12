@@ -34,6 +34,25 @@ export default function SimplePage({ data, isActive, onNavigate }: SimplePagePro
                     ))}
                 </p>
             )}
+            
+            {data.image && (
+                <div style={{ marginTop: '2rem', marginBottom: '1rem' }}>
+                    <img src={data.image} alt={data.titleHighlight} style={{ maxWidth: '200px', filter: 'drop-shadow(0 0 10px rgba(0, 240, 255, 0.3))' }} />
+                </div>
+            )}
+            
+            {data.link && (
+                <a 
+                    href={data.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="sp-link-btn"
+                    style={{ margin: '1rem 0 2.5rem 0', display: 'inline-block', padding: '0.8rem 1.5rem', background: 'rgba(0, 240, 255, 0.1)', border: '1px solid var(--cyan)', color: 'var(--cyan)', textDecoration: 'none', fontFamily: 'var(--font-orbitron)', fontSize: '0.8rem', letterSpacing: '2px', textTransform: 'uppercase', transition: 'all 0.3s' }}
+                >
+                    Visit Website
+                </a>
+            )}
+
             <a
                 className="sp-back"
                 href="#"

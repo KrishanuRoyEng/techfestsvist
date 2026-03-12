@@ -27,6 +27,7 @@ export interface EventCardData {
     number: string;
     regLink?: string;
     qrCode?: string;
+    rules?: string[];
 }
 
 export interface Badge {
@@ -64,6 +65,8 @@ export interface SimplePageData {
     titleHighlight: string;
     subtitle: string;
     content: string;
+    image?: string;
+    link?: string;
 }
 
 // ── Canvas Types ──

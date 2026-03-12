@@ -1,7 +1,7 @@
 import { SideNavItem, TopNavLink } from '@/types';
 
 export const topNavLinks: TopNavLink[] = [
-    { label: 'Workshops', page: 'workshops' },
+    { label: 'Sponsorship', page: 'sponsors' },
     { label: 'Competitions', page: 'events' },
 ];
 

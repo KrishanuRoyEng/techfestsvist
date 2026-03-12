@@ -1,5 +1,6 @@
 import SponsorTag from '@/components/home/SponsorTag';
 import GlitchTitle from '@/components/home/GlitchTitle';
+import TitleSponsor from '@/components/home/TitleSponsor';
 import DateLine from '@/components/home/DateLine';
 import Countdown from '@/components/home/Countdown';
 import HeroButtons from '@/components/home/HeroButtons';
@@ -17,6 +18,7 @@ export default function HomePage({ isActive, onNavigate }: HomePageProps) {
         >
             <SponsorTag />
             <GlitchTitle logo="/Innovention.svg" />
+            <TitleSponsor />
             <DateLine />
             <Countdown />
             <HeroButtons onNavigate={onNavigate} />

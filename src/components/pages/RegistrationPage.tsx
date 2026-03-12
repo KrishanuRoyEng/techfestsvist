@@ -48,43 +48,44 @@ export default function RegistrationPage({ isActive }: RegistrationPageProps) {
                 
                 <div className="reg-flow">
                     {/* Category Selection */}
-                    <div className="reg-step">
-                        <div className="reg-step-num">01</div>
-                        <div className="reg-step-label">Select Department</div>
-                        <div className="reg-grid-cats">
-                            {eventSections.map((section) => (
-                                <div 
-                                    key={section.id}
-                                    className={`reg-cat-card ${selectedCategory?.id === section.id ? 'active' : ''}`}
-                                    onClick={() => handleCategorySelect(section)}
-                                >
-                                    <div className="reg-cat-name">{section.nameHighlight}</div>
-                                    <div className="reg-cat-tag">{section.tag}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Event Selection */}
-                    {selectedCategory && (
-                        <div className="reg-step animate-in">
-                            <div className="reg-step-num">02</div>
-                            <div className="reg-step-label">Choose Sub-Event</div>
-                            <div className="reg-grid-events">
-                                {selectedCategory.cards.map((card) => (
-                                    <div 
-                                        key={card.number}
-                                        className="reg-event-item"
-                                        onClick={() => handleEventOpen(card)}
-                                    >
-                                        <div className="reg-event-dot" />
-                                        <div className="reg-event-name">{card.name}</div>
-                                        <div className="reg-event-btn">AUTHORIZE</div>
-                                    </div>
-                                ))}
+                <div className="reg-grid-cats">
+                    {eventSections.map((section) => (
+                        <React.Fragment key={section.id}>
+                            <div 
+                                className={`reg-cat-card ${selectedCategory?.id === section.id ? 'active' : ''}`}
+                                onClick={() => handleCategorySelect(section)}
+                            >
+                                <div className="reg-cat-name">{section.nameHighlight}</div>
+                                <div className="reg-cat-tag">{section.tag}</div>
                             </div>
-                        </div>
-                    )}
+                            
+                            {selectedCategory?.id === section.id && (
+                                <div 
+                                    className="reg-sub-events-container animate-in"
+                                    style={{ 
+                                        '--section-accent': getAccent(),
+                                        borderLeftColor: getAccent()
+                                    } as React.CSSProperties}
+                                >
+                                    <div className="reg-step-label sub-label" style={{ color: getAccent() }}>Choose Sub-Event</div>
+                                    <div className="reg-grid-events">
+                                        {section.cards.map((card) => (
+                                            <div 
+                                                key={card.number}
+                                                className="reg-event-item"
+                                                onClick={() => handleEventOpen(card)}
+                                            >
+                                                <div className="reg-event-dot" style={{ background: getAccent(), boxShadow: `0 0 10px ${getAccent()}` }} />
+                                                <div className="reg-event-name">{card.name}</div>
+                                                <div className="reg-event-btn" style={{ color: getAccent(), borderColor: `rgba(255,255,255,0.1)` }}>AUTHORIZE</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </React.Fragment>
+                    ))}
+                </div>
                 </div>
             </div>
 

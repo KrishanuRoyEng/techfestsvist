@@ -32,10 +32,10 @@ export default function MobileMenu({ onNavigate }: MobileMenuProps) {
             id: item.id
         })),
         {
-            label: 'Workshops',
-            page: 'workshops',
-            icon: 'M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z',
-            id: 'mob-workshops'
+            label: 'Sponsorship',
+            page: 'sponsors',
+            icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z',
+            id: 'mob-sponsorship'
         }
     ];
 

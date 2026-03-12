@@ -10,11 +10,13 @@ export const simplePages: SimplePageData[] = [
             "Innovention is the annual technical festival of Swami Vivekananda Institute of Science and Technology. Since 2015, we've brought together over 5,000 students from 100+ colleges across Asia to compete, collaborate, and innovate. Our mission: to spark the next generation of engineers and entrepreneurs.",
     },
     {
-        id: 'workshops',
-        title: 'Work',
-        titleHighlight: 'shops',
-        subtitle: '// Hands-On Learning Sessions',
+        id: 'sponsors',
+        title: 'Title',
+        titleHighlight: 'Sponsor',
+        subtitle: '// Aimil Ltd.',
         content:
-            '10+ workshops across 3 days:\n\nML with PyTorch · PCB Design · Unity Game Dev · 3D Printing & CAD · Cybersecurity CTF · Full-Stack Web Dev · VLSI Design · Drone Assembly\n\nEach: 3 hrs · ₹200 · Certificate included',
+            'Aimil Ltd is at the forefront of Instrumentation in India. Since 1932, they have provided state-of-the-art instruments & services to the Indian market.\n\nWe are extremely proud to have Aimil Ltd. as the Title Sponsor for Innovention 2026. Explore their top-notch products and innovations at their website.',
+        image: '/aimil_logo.svg',
+        link: 'https://www.aimil.com/'
     },
 ];
