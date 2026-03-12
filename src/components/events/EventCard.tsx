@@ -1,5 +1,7 @@
-import React from 'react';
+'use client';
+import React, { memo } from 'react';
 import { EventCardData } from '@/types';
+import styles from './EventCard.module.css';
 
 interface EventCardProps {
     card: EventCardData;
@@ -7,39 +9,43 @@ interface EventCardProps {
     onRulesClick?: (card: EventCardData) => void;
 }
 
-export default function EventCard({ card, onRegister, onRulesClick }: EventCardProps) {
+// Optimization: memo prevents the card from re-rendering unless its specific data changes.
+// This is critical when parent state (like section expand/collapse) changes frequently.
+const EventCard = memo(function EventCard({ card, onRegister, onRulesClick }: EventCardProps) {
     return (
-        <div className="ev-card">
-            <div className="ec-cat">{card.category}</div>
-            <div className="ec-name">{card.name}</div>
-            <div className="ec-desc">{card.description}</div>
-            <div className="ec-meta">
-                <span
-                    className="ec-badge rules-trigger"
+        <div className={styles.card}>
+            <div className={styles.category}>{card.category}</div>
+            <div className={styles.name}>{card.name}</div>
+            <div className={styles.desc}>{card.description}</div>
+            <div className={styles.meta}>
+                <button
+                    className={`${styles.badge} ${styles.rulesTrigger}`}
                     onClick={(e) => {
                         e.stopPropagation();
                         onRulesClick?.(card);
                     }}
                 >
                     Rules
-                </span>
+                </button>
                 
                 {card.badges
                     .filter((badge) => badge.isPrize)
                     .map((badge, i) => (
-                        <span
+                        <button
                             key={`prize-${i}`}
-                            className="ec-badge prize"
+                            className={`${styles.badge} ${styles.prize}`}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 onRegister?.(card);
                             }}
                         >
                             {badge.label}
-                        </span>
+                        </button>
                     ))}
             </div>
-            <div className="ec-num-bg">{card.number}</div>
+            <div className={styles.numBg}>{card.number}</div>
         </div>
     );
-}
+});
+
+export default EventCard;

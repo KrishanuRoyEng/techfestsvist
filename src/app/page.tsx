@@ -111,12 +111,11 @@ export default function Page() {
 
   return (
     <div onClick={closeFlyout}>
-      <CustomCursor />
       <CityCanvas />
 
       {/* Navigation Layer */}
       <TopNav onNavigate={navigate} />
-      
+
       <SideNavLeft
         activePage={activePage}
         onNavigate={navigate}
@@ -154,6 +153,7 @@ export default function Page() {
       <GalleryPage isActive={activePage === 'gallery'} />
       <ContactPage isActive={activePage === 'contact'} />
       <MobileMenu onNavigate={navigate} />
+      <CustomCursor />
     </div>
   );
 }

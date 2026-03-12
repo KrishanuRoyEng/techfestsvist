@@ -1,0 +1,208 @@
+.overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(4, 2, 15, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 99999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 2rem;
+  pointer-events: all;
+}
+
+.content {
+  background: rgba(10, 5, 30, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 240, 255, 0.1);
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  animation: modalSlide 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+@keyframes modalSlide {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--font-orbitron), monospace;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 50%;
+}
+
+.closeBtn:hover {
+  color: var(--pink);
+  background: rgba(255, 255, 255, 0.05);
+  transform: rotate(90deg);
+}
+
+.body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.footer {
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.01);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Registration Modal Specific */
+.eventDesc {
+  font-family: var(--font-rajdhani), sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.qrSection {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(0, 240, 255, 0.2);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.qrPlaceholder {
+  width: 140px;
+  height: 140px;
+  background: white;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qrHint {
+  margin-top: 1rem;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: var(--font-orbitron), monospace;
+  letter-spacing: 1px;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--accent, var(--pink));
+  color: var(--dark);
+  font-family: var(--font-orbitron), monospace;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 240, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* Rules Modal Specific */
+.rulesEventName {
+  font-family: var(--font-orbitron), monospace;
+  font-size: 1.1rem;
+  color: var(--cyan);
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.rulesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ruleItem {
+  display: flex;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 0.8rem;
+  border-radius: 4px;
+  border-left: 2px solid var(--cyan);
+}
+
+.ruleNum {
+  font-family: var(--font-orbitron), monospace;
+  font-size: 0.7rem;
+  color: var(--cyan);
+  opacity: 0.6;
+}
+
+.ruleText {
+  font-family: var(--font-rajdhani), sans-serif;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+}
+
+.ruleLink {
+  color: var(--cyan);
+  background: rgba(0, 240, 255, 0.05);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-family: var(--font-orbitron), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+}
+
+.closeWideBtn {
+  width: 100%;
+  padding: 0.8rem;
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-family: var(--font-orbitron), monospace;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}

@@ -1,0 +1,68 @@
+.page {
+  position: fixed !important;
+  inset: 0 !important;
+  padding: 120px 80px 80px 100px !important; /* Increased padding-top and left */
+  display: flex !important;
+  flex-direction: column !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  pointer-events: all !important;
+  scroll-behavior: smooth;
+  z-index: 50 !important;
+  background: rgba(4, 2, 15, 0.4); /* Subtle background to separate from home */
+}
+
+/* Ensure scrollbar is visible and usable */
+.page::-webkit-scrollbar {
+  width: 6px;
+}
+
+.page::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.page::-webkit-scrollbar-thumb {
+  background: var(--cyan);
+  border-radius: 10px;
+}
+
+.title {
+  font-family: var(--font-black-ops), cursive;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: white;
+  letter-spacing: 4px;
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+  margin-bottom: 0.3rem;
+}
+
+.title span {
+  color: var(--cyan);
+}
+
+.sub {
+  font-family: var(--font-orbitron), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 5px;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+}
+
+.divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(to right, var(--cyan), var(--pink));
+  margin-bottom: 3.5rem;
+}
+
+@media (max-width: 992px) {
+  .page {
+    padding: 100px 5% 60px 5% !important;
+  }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: clamp(2rem, 10vw, 3rem);
+    }
+}

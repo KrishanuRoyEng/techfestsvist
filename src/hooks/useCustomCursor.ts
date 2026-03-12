@@ -13,68 +13,53 @@ export function useCustomCursor() {
         let ty = 0;
         let animId: number;
 
+        // Optimization: Using translate3d instead of left/top for GPU acceleration.
+        // This avoids layout recalculations on every frame.
         const handleMouseMove = (e: MouseEvent) => {
             mx = e.clientX;
             my = e.clientY;
             if (curRef.current) {
-                curRef.current.style.left = mx + 'px';
-                curRef.current.style.top = my + 'px';
+                curRef.current.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
             }
         };
 
-        const handleMouseEnter = () => {
-            if (curRef.current) curRef.current.classList.add('hovering');
-            if (cur2Ref.current) cur2Ref.current.classList.add('hovering');
-        };
-        const handleMouseLeave = () => {
-            if (curRef.current) curRef.current.classList.remove('hovering');
-            if (cur2Ref.current) cur2Ref.current.classList.remove('hovering');
-        };
-
-        const addListeners = () => {
-            const clickables = document.querySelectorAll('a, button, .clickable');
-            clickables.forEach(el => {
-                el.addEventListener('mouseenter', handleMouseEnter);
-                el.addEventListener('mouseleave', handleMouseLeave);
-            });
-        };
-
-        const removeListeners = () => {
-            const clickables = document.querySelectorAll('a, button, .clickable');
-            clickables.forEach(el => {
-                el.removeEventListener('mouseenter', handleMouseEnter);
-                el.removeEventListener('mouseleave', handleMouseLeave);
-            });
+        // Optimization: Event Delegation.
+        // Instead of querying all elements and adding individual listeners (plus MutationObserver),
+        // we listen once at the document level. This is much lighter for INP.
+        const handleMouseEnter = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (target.closest?.('a, button, .clickable')) {
+                curRef.current?.classList.add('hovering');
+                cur2Ref.current?.classList.add('hovering');
+            } else {
+                curRef.current?.classList.remove('hovering');
+                cur2Ref.current?.classList.remove('hovering');
+            }
         };
 
         const loop = () => {
+            // Smooth interpolation - increased speed factor from 0.25 to 0.4 for snappier follow
             tx += (mx - tx) * 0.4;
             ty += (my - ty) * 0.4;
+            
             if (cur2Ref.current) {
-                cur2Ref.current.style.left = tx + 'px';
-                cur2Ref.current.style.top = ty + 'px';
+                cur2Ref.current.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
             }
             animId = requestAnimationFrame(loop);
         };
 
-        document.addEventListener('mousemove', handleMouseMove);
-        addListeners();
+        document.addEventListener('mousemove', handleMouseMove, { passive: true });
+        document.addEventListener('mouseover', handleMouseEnter, { passive: true });
+        
         animId = requestAnimationFrame(loop);
-
-        // Re-calculate on DOM changes to catch new elements (e.g. navigation)
-        const observer = new MutationObserver(() => {
-            removeListeners();
-            addListeners();
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
 
         return () => {
             document.removeEventListener('mousemove', handleMouseMove);
-            removeListeners();
-            observer.disconnect();
+            document.removeEventListener('mouseover', handleMouseEnter);
             cancelAnimationFrame(animId);
         };
     }, []);
 
     return { curRef, cur2Ref };
 }
+

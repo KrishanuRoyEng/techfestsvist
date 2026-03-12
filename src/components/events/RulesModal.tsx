@@ -1,7 +1,6 @@
-'use client';
-
-import React from 'react';
+import React, { memo } from 'react';
 import { EventCardData } from '@/types';
+import styles from './Modal.module.css';
 
 interface RulesModalProps {
     isOpen: boolean;
@@ -9,27 +8,27 @@ interface RulesModalProps {
     eventData: EventCardData | null;
 }
 
-export default function RulesModal({ isOpen, onClose, eventData }: RulesModalProps) {
+const RulesModal = memo(function RulesModal({ isOpen, onClose, eventData }: RulesModalProps) {
     if (!isOpen || !eventData) return null;
 
     return (
-        <div className="modal-overlay rules-modal-overlay" onClick={onClose}>
+        <div className={`${styles.overlay} rules-modal-overlay`} onClick={onClose}>
             <div 
-                className="modal-content rules-modal-content" 
+                className={`${styles.content} rules-modal-content`} 
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="modal-header">
-                    <h2 className="modal-title">Event Rules</h2>
-                    <button className="modal-close-btn" onClick={onClose}>
+                <div className={styles.header}>
+                    <h2 className={styles.title}>Event Rules</h2>
+                    <button className={styles.closeBtn} onClick={onClose} aria-label="Close modal">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5">
                             <path d="M18 6L6 18M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
                 
-                <div className="modal-body">
-                    <div className="rules-event-name">{eventData.name}</div>
-                    <div className="rules-list">
+                <div className={styles.body}>
+                    <div className={styles.rulesEventName}>{eventData.name}</div>
+                    <div className={styles.rulesList}>
                         {eventData.rules && eventData.rules.length > 0 ? (
                             eventData.rules.map((rule, i) => {
                                 // Simple parser to extract and format links
@@ -48,7 +47,7 @@ export default function RulesModal({ isOpen, onClose, eventData }: RulesModalPro
                                                 href={url} 
                                                 target="_blank" 
                                                 rel="noopener noreferrer" 
-                                                className="rule-link"
+                                                className={styles.ruleLink}
                                             >
                                                 View Detailed Rules
                                             </a>
@@ -58,24 +57,27 @@ export default function RulesModal({ isOpen, onClose, eventData }: RulesModalPro
                                 }
 
                                 return (
-                                    <div key={i} className="rule-item">
-                                        <span className="rule-num">{(i + 1).toString().padStart(2, '0')}</span>
-                                        <span className="rule-text">{ruleContent}</span>
+                                    <div key={i} className={styles.ruleItem}>
+                                        <span className={styles.ruleNum}>{(i + 1).toString().padStart(2, '0')}</span>
+                                        <span className={styles.ruleText}>{ruleContent}</span>
                                     </div>
                                 );
                             })
                         ) : (
-                            <div className="rule-placeholder">
+                            <div style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-rajdhani), sans-serif' }}>
                                 Rules for <strong>{eventData.name}</strong> will be updated soon. Stay tuned!
                             </div>
                         )}
                     </div>
                 </div>
                 
-                <div className="modal-footer">
-                    <button className="btn-modal-close-wide" onClick={onClose}>ACKNOWLEDGE</button>
+                <div className={styles.footer}>
+                    <button className={styles.closeWideBtn} onClick={onClose}>ACKNOWLEDGE</button>
                 </div>
             </div>
         </div>
     );
-}
+});
+
+export default RulesModal;
+

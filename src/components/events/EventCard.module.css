@@ -1,0 +1,193 @@
+.card {
+  background: color-mix(in srgb, var(--accent), transparent 92%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  border-left: 2px solid var(--accent);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+  min-height: 240px;
+  border-radius: 0;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 70%);
+  pointer-events: none;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-8px) scale(1.02);
+  background: color-mix(in srgb, var(--accent), transparent 85%);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px var(--accent);
+}
+
+.category {
+  font-family: var(--font-orbitron), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  opacity: 0.7;
+}
+
+.name {
+  font-family: var(--font-orbitron), monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: white;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+}
+
+.desc {
+  font-family: var(--font-rajdhani), sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+  position: relative;
+  z-index: 2;
+}
+
+.meta {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+}
+
+.badge {
+  font-family: var(--font-orbitron), monospace;
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.7rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 2px;
+}
+
+.badge:hover {
+  background: white;
+  color: black;
+}
+
+.rulesTrigger {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--cyan);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.rulesTrigger:hover {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+  color: var(--cyan);
+}
+
+.prize {
+  color: white;
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 600;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
+}
+
+.prize:hover {
+  background: var(--accent);
+  color: var(--dark);
+  box-shadow: 0 0 15px var(--accent);
+  transform: translateY(-2px);
+}
+
+.numBg {
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  font-family: var(--font-black-ops), cursive;
+  font-size: 8rem;
+  color: rgba(255, 255, 255, 0.03);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+  transition: all 0.4s;
+}
+
+.card:hover .numBg {
+  color: rgba(255, 255, 255, 0.05);
+  transform: scale(1.1) translate(-10%, 10%);
+}
+
+@media (max-width: 768px) {
+  .card {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.8rem;
+    text-align: center;
+    border-left-width: 1px;
+    background: color-mix(in srgb, var(--accent), transparent 85%);
+    min-height: auto;
+  }
+
+  .category {
+    font-size: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .name {
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .desc {
+    display: none;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    justify-content: center;
+    transform: scale(0.85);
+    margin-top: 0.75rem;
+  }
+
+  .badge {
+      flex-shrink: 0;
+  }
+
+  .numBg {
+    font-size: 4rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.2;
+  }
+}
