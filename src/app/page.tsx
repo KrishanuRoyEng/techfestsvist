@@ -153,6 +153,7 @@ export default function Page() {
       <GalleryPage isActive={activePage === 'gallery'} />
       <ContactPage isActive={activePage === 'contact'} />
       <MobileMenu onNavigate={navigate} />
+      <div className="discrete-tag">Made with ❤️ by Krishanu</div>
       <CustomCursor />
     </div>
   );

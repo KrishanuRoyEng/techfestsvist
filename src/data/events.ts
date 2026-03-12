@@ -189,7 +189,7 @@ export const eventSections: EventSectionData[] = [
         id: 'mr-ms-engineer',
         number: '05',
         name: 'Mr. / Ms.',
-        nameHighlight: 'Engineer',
+        nameHighlight: 'Mr. / Ms. Engineer',
         tag: 'Personality',
         description:
             'The flagship personality contest searching for the most charismatic and talented engineer on campus.',
@@ -220,7 +220,7 @@ export const eventSections: EventSectionData[] = [
         id: 'brain-buster',
         number: '06',
         name: 'Brain',
-        nameHighlight: 'Buster',
+        nameHighlight: 'Brain Buster',
         tag: 'Mental Games',
         description:
             'Put your intellect to the test with games that require deep focus, strategy, and logic.',
@@ -266,7 +266,7 @@ export const eventSections: EventSectionData[] = [
         id: 'code-storm',
         number: '07',
         name: 'Code',
-        nameHighlight: 'Storm',
+        nameHighlight: 'Code Storm',
         tag: 'Coding & Logic',
         description:
             'The ultimate coding challenge. From web development to query optimization, prove your coding prowess.',
@@ -327,7 +327,7 @@ export const eventSections: EventSectionData[] = [
         id: 'commercial',
         number: '08',
         name: 'Techno',
-        nameHighlight: 'Commercial',
+        nameHighlight: 'Techno Commercial',
         tag: 'Business & Idea',
         description:
             'Bridge the gap between technology and business. Pitch your startup or showcase your innovative ideas.',

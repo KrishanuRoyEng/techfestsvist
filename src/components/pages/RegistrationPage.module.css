@@ -57,10 +57,14 @@
   top: -1.5rem;
   left: -1rem;
   z-index: 0;
+  pointer-events: none; /* Prevent blocking clicks/taps */
+  user-select: none;
 }
 
 .subEventsContainer {
   grid-column: 1 / -1;
+  position: relative; /* Contain the absolute regStepNum */
+  z-index: 10;
   background: color-mix(in srgb, var(--section-accent, var(--cyan)), transparent 92%);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -112,6 +116,7 @@
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
   position: relative;
+  z-index: 2; /* Ensure it stays above background decorations */
   overflow: hidden;
   height: 100%;
   display: flex;
@@ -131,10 +136,17 @@
   opacity: 0.5;
 }
 
-.catCard:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(0, 240, 255, 0.3);
-  transform: scale(1.02);
+@media (hover: hover) {
+  .catCard:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(0, 240, 255, 0.3);
+    transform: scale(1.02);
+  }
+}
+
+.catCard:active {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(0.98);
 }
 
 .catCard.active {
@@ -182,10 +194,17 @@
   border-radius: 4px;
 }
 
-.eventItem:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.1);
-  transform: translateX(5px);
+@media (hover: hover) {
+  .eventItem:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+  }
+}
+
+.eventItem:active {
+  background: rgba(255, 255, 255, 0.12);
+  transform: scale(0.98);
 }
 
 .eventDot {

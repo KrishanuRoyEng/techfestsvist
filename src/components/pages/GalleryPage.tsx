@@ -107,24 +107,20 @@ const MediaCard = memo(function MediaCard({ item, onClick }: { item: GalleryImag
       aria-label={item.caption}
     >
       {item.type === 'video' ? (
-        <div style={{ position: 'relative', width: '100%', paddingTop: '75%' }}>
-          <video src={item.url} muted playsInline className="gallery-card-media" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+          <video src={item.url} muted playsInline className="gallery-card-media" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           <div className="gallery-video-badge">▶</div>
         </div>
       ) : (
-        <div style={{ position: 'relative', width: '100%', height: 'auto', minHeight: '150px' }}>
-             {/* We use fill + a responsive height container for masonry, 
-                 but Next.js Image also supports aspect ratio. 
-                 Since URL is external, filling the parent card is safest. */}
+        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
              <Image 
                 src={item.url} 
                 alt={item.caption} 
                 className="gallery-card-media"
-                width={400} // Placeholder width for better layout calc
-                height={300} // Placeholder height for better layout calc
+                fill
                 loading="lazy"
                 sizes="(max-width: 480px) 50vw, (max-width: 768px) 33vw, 25vw"
-                style={{ width: '100%', height: 'auto', display: 'block' }}
+                style={{ objectFit: 'cover' }}
              />
         </div>
       )}
@@ -173,13 +169,18 @@ export default function GalleryPage({ isActive }: GalleryPageProps) {
   }, [activeCategory, filteredFlat]);
 
   // Separate large (>3 images) and small (≤3 images) categories
+  // Force "T-Shirt painting" to always be in the large group
   const { largeGroups, smallGroups } = useMemo(() => {
     const entries = Object.entries(groupedImages);
     const large: typeof entries = [];
     const small: typeof entries = [];
     entries.forEach(([cat, imgs]) => {
-      if (activeCategory !== 'All' || imgs.length > 3) large.push([cat, imgs]);
-      else small.push([cat, imgs]);
+      const isForceLarge = cat.toLowerCase().includes('t-shirt painting');
+      if (activeCategory !== 'All' || imgs.length > 3 || isForceLarge) {
+        large.push([cat, imgs]);
+      } else {
+        small.push([cat, imgs]);
+      }
     });
     return { largeGroups: large, smallGroups: small };
   }, [groupedImages, activeCategory]);
@@ -214,10 +215,10 @@ export default function GalleryPage({ isActive }: GalleryPageProps) {
       >
         {/* Header */}
         <div className="gallery-page-header">
-          <h1 className="sp-title" style={{ marginBottom: '0.3rem' }}>
+          <h1 className="sp-title">
             Event <span>Gallery</span>
           </h1>
-          <div className="sp-sub" style={{ marginBottom: '1rem' }}>Techfest 2025 · Captured Moments</div>
+          <div className="sp-sub">Techfest 2025 · Captured Moments</div>
 
           <div className="gallery-filters">
             {categories.map((cat) => (
@@ -236,7 +237,7 @@ export default function GalleryPage({ isActive }: GalleryPageProps) {
         <div className="gallery-scroll-body gallery-scrollbar">
           <div className="gallery-body-inner">
 
-            {/* ── Large categories: full-width masonry ── */}
+            {/* ── Large categories: full-width grid ── */}
             {largeGroups.map(([category, images]) => (
               <div key={category} className="gallery-category-block">
                 {activeCategory === 'All' && (
