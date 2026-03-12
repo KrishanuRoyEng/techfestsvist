@@ -22,8 +22,8 @@ export default function TopNav({ onNavigate }: TopNavProps) {
                     <Image
                         src="/College.svg"
                         alt="College Logo"
-                        width={180}
-                        height={48}
+                        width={210}
+                        height={56}
                         className="pulse-logo"
                         priority
                     />
@@ -52,8 +52,8 @@ export default function TopNav({ onNavigate }: TopNavProps) {
                         src="/Logo.svg"
                         alt="Innovention Logo"
                         className="pulse-logo"
-                        width={180}
-                        height={48}
+                        width={210}
+                        height={56}
                         priority
                     />
                 </div>
