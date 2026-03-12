@@ -11,7 +11,7 @@ export const galleryImages: GalleryImage[] = [
     {
         id: 'gen-1',
         url: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/Gallery/WhatsApp%20Image%202025-05-15%20at%201.07.03%20PM.jpeg',
-        caption: 'Techfest 2025 General View',
+        caption: 'Techfest 2025 Highlights',
         category: 'General',
         type: 'image'
     },
@@ -25,7 +25,7 @@ export const galleryImages: GalleryImage[] = [
     {
         id: 'gen-3',
         url: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/Gallery/WhatsApp%20Image%202025-05-15%20at%201.07.04%20PM%20%281%29.jpeg',
-        caption: 'Techfest 2025 Highlights',
+        caption: 'Lamp Lighting',
         category: 'General',
         type: 'image'
     },
@@ -36,13 +36,7 @@ export const galleryImages: GalleryImage[] = [
         category: 'General',
         type: 'image'
     },
-    {
-        id: 'gen-5',
-        url: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/Gallery/WhatsApp%20Image%202025-05-15%20at%207.17.52%20PM%20%282%29.jpeg',
-        caption: 'Techfest 2025 Crowd',
-        category: 'General',
-        type: 'image'
-    },
+
     {
         id: 'gen-6',
         url: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-15%20at%206.33.11%20PM.jpeg',
@@ -53,7 +47,7 @@ export const galleryImages: GalleryImage[] = [
     {
         id: 'gen-7',
         url: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-15%20at%206.45.31%20PM.jpeg',
-        caption: 'Techfest 2025 Crowd',
+        caption: 'Volunteers',
         category: 'General',
         type: 'image'
     },
@@ -105,6 +99,13 @@ export const galleryImages: GalleryImage[] = [
     {
         id: 'win-6',
         url: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-15%20at%207.17.57%20PM.jpeg',
+        caption: 'Winners of various events',
+        category: 'Winners',
+        type: 'image'
+    },
+    {
+        id: 'win-7',
+        url: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/Gallery/WhatsApp%20Image%202025-05-15%20at%207.13.36%20PM%20%281%29.jpeg',
         caption: 'Winners of various events',
         category: 'Winners',
         type: 'image'
@@ -206,22 +207,8 @@ export const galleryImages: GalleryImage[] = [
     },
     {
         id: 'tex-5',
-        url: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/Gallery/WhatsApp%20Image%202025-05-15%20at%201.07.04%20PM%20%281%29.jpeg',
-        caption: 'Texhibition Event View',
-        category: 'Texhibition',
-        type: 'image'
-    },
-    {
-        id: 'tex-6',
         url: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/Gallery/WhatsApp%20Image%202025-06-03%20at%203.51.49%20PM.jpeg',
         caption: 'Texhibition Showcase 6',
-        category: 'Texhibition',
-        type: 'image'
-    },
-    {
-        id: 'tex-7',
-        url: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/Gallery/WhatsApp%20Image%202025-05-15%20at%207.13.36%20PM%20%281%29.jpeg',
-        caption: 'Texhibition Showcase 7',
         category: 'Texhibition',
         type: 'image'
     },

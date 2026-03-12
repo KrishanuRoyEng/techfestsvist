@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, memo } from 'react';
+import Image from 'next/image';
 import { galleryImages, GalleryImage } from '@/data/gallery';
 
 interface GalleryPageProps {
@@ -66,7 +67,16 @@ function Lightbox({
           {item.type === 'video' ? (
             <video src={item.url} controls autoPlay style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           ) : (
-            <img src={item.url} alt={item.caption} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <Image 
+                src={item.url} 
+                alt={item.caption} 
+                fill
+                style={{ objectFit: 'contain' }}
+                sizes="(max-width: 768px) 100vw, 80vw"
+                priority
+              />
+            </div>
           )}
         </div>
         <div className="gallery-lb-caption">
@@ -85,8 +95,8 @@ function Lightbox({
   );
 }
 
-// ── Media card ─────────────────────────────────────────────────────────
-function MediaCard({ item, onClick }: { item: GalleryImage; onClick: () => void }) {
+// Optimization: Memoized MediaCard to prevent re-renders unless the item specifically changes.
+const MediaCard = memo(function MediaCard({ item, onClick }: { item: GalleryImage; onClick: () => void }) {
   return (
     <div
       className="gallery-card"
@@ -97,19 +107,33 @@ function MediaCard({ item, onClick }: { item: GalleryImage; onClick: () => void 
       aria-label={item.caption}
     >
       {item.type === 'video' ? (
-        <>
-          <video src={item.url} muted playsInline className="gallery-card-media" />
+        <div style={{ position: 'relative', width: '100%', paddingTop: '75%' }}>
+          <video src={item.url} muted playsInline className="gallery-card-media" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
           <div className="gallery-video-badge">▶</div>
-        </>
+        </div>
       ) : (
-        <img src={item.url} alt={item.caption} className="gallery-card-media" loading="lazy" decoding="async" />
+        <div style={{ position: 'relative', width: '100%', height: 'auto', minHeight: '150px' }}>
+             {/* We use fill + a responsive height container for masonry, 
+                 but Next.js Image also supports aspect ratio. 
+                 Since URL is external, filling the parent card is safest. */}
+             <Image 
+                src={item.url} 
+                alt={item.caption} 
+                className="gallery-card-media"
+                width={400} // Placeholder width for better layout calc
+                height={300} // Placeholder height for better layout calc
+                loading="lazy"
+                sizes="(max-width: 480px) 50vw, (max-width: 768px) 33vw, 25vw"
+                style={{ width: '100%', height: 'auto', display: 'block' }}
+             />
+        </div>
       )}
       <div className="gallery-card-overlay">
         <p className="gallery-card-caption">{item.caption}</p>
       </div>
     </div>
   );
-}
+});
 
 // ── Main Page ──────────────────────────────────────────────────────────
 export default function GalleryPage({ isActive }: GalleryPageProps) {

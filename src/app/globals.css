@@ -26,6 +26,7 @@
   --ev-green: #00ff75;
   --ev-orange: #ff8a00;
   --ev-blue: #0075ff;
+  --nav-height: 80px;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -205,18 +206,37 @@ body::before {
   top: 0;
   left: 0;
   right: 0;
-  height: 70px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 200;
-  padding: 0 4rem;
+  z-index: 1000; /* High z-index to stay above pages */
+  padding: 0 2rem;
+  background: rgba(4, 2, 15, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .top-nav-logo {
   display: flex;
   align-items: center;
   text-decoration: none;
+  height: 100%;
+}
+
+.top-nav-logo.left {
+    justify-content: flex-start;
+}
+
+.top-nav-logo.right {
+    justify-content: flex-end;
+}
+
+.college-logo {
+    height: 40px !important;
+    width: auto !important;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
 }
 
 
@@ -424,7 +444,10 @@ body::before {
 /* ── PAGES ── */
 .page {
   position: fixed;
-  inset: 0;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 10;
   overflow: hidden;
   display: none;
@@ -1268,7 +1291,7 @@ body::before {
 .contact-layout {
   flex-direction: row;
   gap: 4rem;
-  padding: 0 10%;
+  padding: 2rem 10%;
   align-items: center;
   justify-content: center;
 }
@@ -1306,10 +1329,8 @@ body::before {
 @media (max-width: 992px) {
   .contact-layout {
     flex-direction: column;
-    padding: 0 5%;
+    padding: 2rem 5% 50px 5%;
     gap: 2rem;
-    padding-top: 100px;
-    padding-bottom: 50px;
     align-items: flex-start;
     overflow-y: auto;
     justify-content: flex-start;
@@ -1489,15 +1510,18 @@ body::before {
 }
 
 @media (max-width: 768px) {
+  :root {
+    --nav-height: 64px;
+  }
   .top-nav {
     left: 0;
     right: 0;
     padding: 0 1rem;
-    height: 60px;
+    height: 64px;
   }
 
-  .top-nav-logo img {
-    height: 36px;
+  .top-nav-logo .pulse-logo {
+    height: 32px !important;
   }
 
   .top-nav-links {
@@ -1950,7 +1974,7 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5.5rem 1.25rem 0.75rem;
+  padding: 1.5rem 1.25rem 0.75rem;
   text-align: center;
   z-index: 20;
   pointer-events: all;
@@ -2156,15 +2180,19 @@ body::before {
 /* ── Lightbox overlay — centered via flexbox, no Tailwind ── */
 .gallery-lightbox-overlay {
   position: fixed;
-  inset: 0;
-  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2147483640; /* Just below the cursor */
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(4, 2, 15, 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  animation: galleryLbFadeIn 0.2s ease;
+  background: rgba(4, 2, 15, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: galleryLbFadeIn 0.3s ease forwards;
+  pointer-events: auto;
 }
 
 @keyframes galleryLbFadeIn {
@@ -2177,8 +2205,9 @@ body::before {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: min(82vw, 820px);
-  max-height: 78vh;
+  width: min(85vw, 1000px);
+  height: 80vh;
+  max-height: 80vh;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255,255,255,0.07);
