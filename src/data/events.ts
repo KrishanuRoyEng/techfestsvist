@@ -24,9 +24,7 @@ export const eventSections: EventSectionData[] = [
                 qrCode: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/TechTrix.jpeg',
                 regLink: 'https://docs.google.com/forms/d/e/1FAIpQLSc9RYRWONl48ttA2Y7uPyvu_d88RCB_tvX8nZxbBZefbQPXIg/viewform',
                 rules: [
-                    'Teams of exactly 2 members.',
-                    'Event consists of multiple rounds including a tech-quiz and practical circuit debugging.',
-                    'Use of mobile phones or smartwatches during the quiz rounds is strictly prohibited.'
+                    'Rules will be notified soon.'
                 ],
             },
         ],
@@ -54,9 +52,7 @@ export const eventSections: EventSectionData[] = [
                 qrCode: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/Innovention%20Robotics.jpeg',
                 regLink: 'https://docs.google.com/forms/d/e/1FAIpQLSe7V7J1U4XcGZm41rIQuYFZv9_jOINS23Uk8vsCVLFz97tWuA/viewform',
                 rules: [
-                    'Bots must not exceed the maximum weight limit of 2kg and dimensions of 30x30x30 cm.',
-                    'Maximum allowed voltage is 12V.',
-                    'Any bot causing damage to the arena will be immediately disqualified.'
+                    'Rules will be notified soon.'
                 ],
             },
             {
@@ -68,9 +64,7 @@ export const eventSections: EventSectionData[] = [
                 qrCode: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/Innovention%20Robotics.jpeg',
                 regLink: 'https://docs.google.com/forms/d/e/1FAIpQLSe7V7J1U4XcGZm41rIQuYFZv9_jOINS23Uk8vsCVLFz97tWuA/viewform',
                 rules: [
-                    'Bots must not exceed the maximum weight limit of 2kg and dimensions of 30x30x30 cm.',
-                    'Maximum allowed voltage is 12V.',
-                    'Any bot causing damage to the arena will be immediately disqualified.'
+                    'Rules will be notified soon.'
                 ],
             },
             {
@@ -82,9 +76,7 @@ export const eventSections: EventSectionData[] = [
                 qrCode: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/Innovention%20Robotics.jpeg',
                 regLink: 'https://docs.google.com/forms/d/e/1FAIpQLSe7V7J1U4XcGZm41rIQuYFZv9_jOINS23Uk8vsCVLFz97tWuA/viewform',
                 rules: [
-                    'Bots must not exceed the maximum weight limit of 2kg and dimensions of 30x30x30 cm.',
-                    'Maximum allowed voltage is 12V.',
-                    'Any bot causing damage to the arena will be immediately disqualified.'
+                    'Rules will be notified soon.'
                 ],
             },
         ],
@@ -179,7 +171,7 @@ export const eventSections: EventSectionData[] = [
             },
             {
                 category: 'Fashion',
-                name: 'Cose Play',
+                name: 'Cosplay',
                 description: 'Dress up as your favorite characters and bring them to life with performance and aura.',
                 badges: [{ label: 'Performance' }, { label: 'Register', isPrize: true }],
                 number: '02',
