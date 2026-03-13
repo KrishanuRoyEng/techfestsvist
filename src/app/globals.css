@@ -1132,18 +1132,49 @@ body::before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
   pointer-events: all;
+  padding: 2rem 1rem;
+}
+
+.sp-container {
+  width: min(90%, 900px);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: rgba(8, 4, 20, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 240, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.sp-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0.5;
+}
+
+.sp-header {
+  padding: 2.5rem 2.5rem 1rem;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .sp-title {
   font-family: var(--font-black-ops), cursive;
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
   color: white;
   text-transform: uppercase;
   letter-spacing: 4px;
   text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.5rem;
 }
 
 .sp-title span {
@@ -1153,37 +1184,126 @@ body::before {
 .sp-sub {
   font-family: var(--font-orbitron), monospace;
   font-size: 0.6rem;
-  letter-spacing: 5px;
-  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 4px;
+  color: rgba(0, 240, 255, 0.4);
   text-transform: uppercase;
-  margin-bottom: 1.8rem;
+  font-weight: 500;
+}
+
+.sp-content-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 2.5rem 2rem;
+  margin: 0 0.5rem;
 }
 
 .sp-content {
   font-family: var(--font-rajdhani), sans-serif;
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 2;
-  max-width: 520px;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.8;
+  max-width: 100%;
+}
+
+.sp-formula {
+  font-family: var(--font-orbitron), sans-serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+  padding-bottom: 1rem;
+}
+
+.text-cyan {
+  color: var(--cyan);
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.sp-content p {
+  margin-bottom: 1.5rem;
+}
+
+.sp-content strong {
+  color: white;
+  letter-spacing: 1px;
+}
+
+.sp-link-btn {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  text-decoration: none;
+  font-family: var(--font-orbitron), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  margin: 1.5rem 0;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+}
+
+.sp-link-btn:hover {
+  background: var(--cyan);
+  color: var(--dark);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.sp-footer {
+  padding: 1rem 2.5rem 2rem;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .sp-back {
   display: inline-block;
-  margin-top: 1.5rem;
   font-family: var(--font-orbitron), monospace;
-  font-size: 0.6rem;
-  letter-spacing: 3px;
-  color: var(--cyan);
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.4);
   text-decoration: none;
-  border: 1px solid rgba(0, 240, 255, 0.3);
-  padding: 0.6rem 1.4rem;
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s;
+  transition: all 0.3s;
 }
 
 .sp-back:hover {
-  background: var(--cyan);
-  color: var(--dark);
+  color: var(--cyan);
+  letter-spacing: 4px;
+}
+
+@media (max-width: 768px) {
+  .sp-container {
+    width: 95%;
+    max-height: 80vh;
+  }
+
+  .sp-header {
+    padding: 2rem 1.5rem 0.8rem;
+  }
+
+  .sp-content-wrapper {
+    padding: 0.8rem 1.5rem 1.5rem;
+  }
+
+  .sp-content {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    text-align: justify;
+  }
+
+  .sp-title {
+    font-size: 1.8rem;
+  }
+
+  .sp-sub {
+    font-size: 0.5rem;
+    letter-spacing: 2px;
+  }
 }
 
 /* ── KEYFRAMES ── */
