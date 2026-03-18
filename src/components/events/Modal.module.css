@@ -76,6 +76,13 @@
   padding: 1.5rem;
   overflow-y: auto;
   flex-grow: 1;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .footer {
@@ -97,10 +104,10 @@
   text-align: center;
 }
 
-.qrSection {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px dashed rgba(0, 240, 255, 0.2);
-  padding: 1.5rem;
+.brochureSection {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1rem;
   margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
@@ -108,22 +115,30 @@
   border-radius: 8px;
 }
 
-.qrPlaceholder {
-  width: 140px;
-  height: 140px;
-  background: white;
-  padding: 5px;
+.brochureContainer {
+  width: 100%;
+  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
-.qrHint {
-  margin-top: 1rem;
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.3);
+.brochureImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.brochureHint {
+  margin-top: 1.2rem;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
   font-family: var(--font-orbitron), monospace;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 
 .submitBtn {

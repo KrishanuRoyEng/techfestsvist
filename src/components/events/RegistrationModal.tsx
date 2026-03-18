@@ -1,4 +1,5 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
+import Image from 'next/image';
 import { EventCardData } from '@/types';
 import styles from './Modal.module.css';
 
@@ -10,6 +11,17 @@ interface RegistrationModalProps {
 }
 
 const RegistrationModal = memo(function RegistrationModal({ isOpen, onClose, eventData, accentColor }: RegistrationModalProps) {
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isOpen]);
+
     if (!isOpen || !eventData) return null;
 
     return (
@@ -33,15 +45,23 @@ const RegistrationModal = memo(function RegistrationModal({ isOpen, onClose, eve
                         {eventData.description}
                     </p>
                     
-                    <div className={styles.qrSection}>
-                        <div className={styles.qrPlaceholder}>
-                            {eventData.qrCode ? (
-                                <img src={eventData.qrCode} alt="QR Code" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    <div className={styles.brochureSection}>
+                        <div className={styles.brochureContainer}>
+                            {eventData.brochure ? (
+                                <Image 
+                                    src={eventData.brochure} 
+                                    alt="Event Brochure" 
+                                    className={styles.brochureImg} 
+                                    width={400} 
+                                    height={560}
+                                    priority
+                                    unoptimized
+                                />
                             ) : (
-                                <span style={{ textAlign: 'center' }}>QR CODE<br/>PENDING</span>
+                                <span style={{ textAlign: 'center' }}>BROCHURE<br/>PENDING</span>
                             )}
                         </div>
-                        <div className={styles.qrHint}>Scan to register directly</div>
+                        <div className={styles.brochureHint}>Brochure contains event QR</div>
                     </div>
                 </div>
 
