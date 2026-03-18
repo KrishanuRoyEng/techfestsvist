@@ -104,6 +104,30 @@
   text-align: center;
 }
 
+.externalHint {
+  font-family: var(--font-rajdhani), sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.paymentLink {
+  color: var(--accent, var(--pink));
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.paymentLink:hover {
+  filter: brightness(1.2);
+}
+
 .brochureSection {
   background: rgba(255, 255, 255, 0.01);
   border: 1px solid rgba(255, 255, 255, 0.05);

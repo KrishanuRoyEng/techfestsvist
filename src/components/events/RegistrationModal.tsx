@@ -41,9 +41,9 @@ const RegistrationModal = memo(function RegistrationModal({ isOpen, onClose, eve
                 </div>
                 
                 <div className={styles.body}>
-                    <p className={styles.eventDesc}>
-                        {eventData.description}
-                    </p>
+                    <div className={styles.externalHint}>
+                        For Non-SVIST (external) students, head to <a href="#payment" className={styles.paymentLink} onClick={onClose}>Payment</a> before registering.
+                    </div>
                     
                     <div className={styles.brochureSection}>
                         <div className={styles.brochureContainer}>

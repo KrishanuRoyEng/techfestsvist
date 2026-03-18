@@ -1,0 +1,242 @@
+.page {
+  background: transparent;
+  width: 100vw;
+  height: calc(100vh - var(--nav-height));
+  position: absolute;
+  top: var(--nav-height);
+  left: 0;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  opacity: 1;
+  z-index: 10;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 6rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .qrSection {
+    order: -1;
+  }
+}
+
+.sectionTitle {
+  font-family: var(--font-orbitron), monospace;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sectionTitle::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--cyan), transparent);
+}
+
+/* ── QR SECTION ── */
+.qrCard {
+  background: rgba(10, 5, 30, 0.5);
+  backdrop-filter: blur(12px);
+  padding: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+.portalDesc {
+  font-family: var(--font-rajdhani), sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 2.5rem;
+  line-height: 1.5;
+}
+
+.highlightPrice {
+  color: #fff;
+  font-weight: 700;
+  padding: 0 4px;
+  background: rgba(0, 240, 255, 0.1);
+  border-bottom: 2px solid var(--cyan);
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.qrWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto 2.5rem;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.qrCorner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--cyan);
+}
+
+.tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+.tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+.bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+.br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+.qrImageContainer {
+  position: relative;
+  overflow: hidden;
+  background: white;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.qrImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.qrScannerLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--cyan);
+  box-shadow: 0 0 15px var(--cyan);
+  animation: scan 3s infinite linear;
+  z-index: 5;
+}
+
+@keyframes scan {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+.downloadBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--cyan);
+  color: var(--dark);
+  text-decoration: none;
+  font-family: var(--font-orbitron), monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.downloadBtn:hover {
+  background: white;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 240, 255, 0.2);
+}
+
+.btnIcon {
+  font-size: 1.2rem;
+}
+
+/* ── GUIDELINES ── */
+.guideLinesList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.guideLineItem {
+  display: flex;
+  gap: 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  align-items: center;
+}
+
+.guideLineItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(0, 240, 255, 0.3);
+  transform: translateX(10px);
+}
+
+.guideIcon {
+  font-size: 1.8rem;
+  opacity: 0.9;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.guideText strong {
+  display: block;
+  font-family: var(--font-orbitron), monospace;
+  font-size: 0.85rem;
+  color: #fff;
+  margin-bottom: 0.25rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.guideText p {
+  font-family: var(--font-rajdhani), sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .qrCard {
+    padding: 1.5rem;
+  }
+  
+  .portalDesc {
+    font-size: 0.85rem;
+  }
+  
+  .guideLineItem {
+    padding: 1rem;
+  }
+  
+  .guideIcon {
+    font-size: 1.5rem;
+  }
+}
