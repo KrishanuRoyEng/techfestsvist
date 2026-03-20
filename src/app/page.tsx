@@ -15,7 +15,6 @@ import SimplePage from '@/components/pages/SimplePage';
 import RegistrationPage from '@/components/pages/RegistrationPage';
 import GalleryPage from '@/components/pages/GalleryPage';
 import ContactPage from '@/components/pages/ContactPage';
-import PaymentPage from '@/components/pages/PaymentPage';
 import { simplePages } from '@/data/simplePages';
 
 export default function Page() {
@@ -153,7 +152,6 @@ export default function Page() {
       <RegistrationPage isActive={activePage === 'registration'} />
       <GalleryPage isActive={activePage === 'gallery'} />
       <ContactPage isActive={activePage === 'contact'} />
-      <PaymentPage isActive={activePage === 'payment'} />
       <MobileMenu onNavigate={navigate} />
       <div className="discrete-tag">Made with ❤️ by Krishanu</div>
       <CustomCursor />

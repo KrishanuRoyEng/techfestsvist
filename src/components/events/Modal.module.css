@@ -104,28 +104,43 @@
   text-align: center;
 }
 
-.externalHint {
-  font-family: var(--font-rajdhani), sans-serif;
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.5;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  padding: 1rem;
+.externalFormBtn {
+  width: 100%;
+  padding: 0.8rem;
   background: rgba(255, 255, 255, 0.03);
-  border: 1px dashed rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-}
-
-.paymentLink {
-  color: var(--accent, var(--pink));
-  text-decoration: underline;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #00f0ff;
+  text-decoration: none;
+  font-family: var(--font-orbitron), monospace;
+  font-size: 0.7rem;
   font-weight: 600;
-  cursor: pointer;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 6px;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  letter-spacing: 1px;
 }
 
-.paymentLink:hover {
-  filter: brightness(1.2);
+.externalFormBtn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s;
+}
+
+.externalFormBtn:hover {
+  background: rgba(0, 240, 255, 0.08);
+  border-color: #00f0ff;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+  color: white;
+}
+
+.externalFormBtn:hover svg {
+  transform: translateX(3px);
 }
 
 .brochureSection {
