@@ -73,7 +73,7 @@
 }
 
 .body {
-  padding: 1.5rem;
+  padding: 1rem 1.2rem;
   overflow-y: auto;
   flex-grow: 1;
   /* Hide scrollbar for Chrome, Safari and Opera */
@@ -104,11 +104,11 @@
   text-align: center;
 }
 
-.externalFormBtn {
-  width: 100%;
-  padding: 0.8rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+.nonSvistBtn {
+  flex: 1;
+  padding: 0.7rem;
+  background: rgba(0, 240, 255, 0.05); /* cyan tint */
+  border: 1px solid rgba(0, 240, 255, 0.3);
   color: #00f0ff;
   text-decoration: none;
   font-family: var(--font-orbitron), monospace;
@@ -117,37 +117,31 @@
   text-transform: uppercase;
   text-align: center;
   border-radius: 6px;
-  margin-bottom: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
   letter-spacing: 1px;
 }
 
-.externalFormBtn svg {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.3s;
-}
-
-.externalFormBtn:hover {
-  background: rgba(0, 240, 255, 0.08);
+.nonSvistBtn:hover {
+  background: rgba(0, 240, 255, 0.15);
   border-color: #00f0ff;
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
   color: white;
+  transform: translateY(-2px);
 }
 
-.externalFormBtn:hover svg {
-  transform: translateX(3px);
+.nonSvistBtn:active {
+  transform: translateY(0);
 }
 
 .brochureSection {
   background: rgba(255, 255, 255, 0.01);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 1rem;
-  margin-bottom: 1rem;
+  padding: 0.8rem;
+  margin-bottom: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -156,7 +150,7 @@
 
 .brochureContainer {
   width: 100%;
-  min-height: 200px;
+  min-height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -164,37 +158,51 @@
 }
 
 .brochureImg {
-  width: 100%;
+  max-width: 100%;
+  max-height: 55vh;
+  width: auto;
   height: auto;
+  object-fit: contain;
   display: block;
   border-radius: 4px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.brochureHint {
-  margin-top: 1.2rem;
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.4);
-  font-family: var(--font-orbitron), monospace;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
+
+.btnGroup {
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+  gap: 0.8rem;
+  justify-content: center;
 }
 
 .submitBtn {
-  width: 100%;
-  padding: 0.8rem;
+  flex: 1;
+  padding: 0.7rem;
   background: var(--accent, var(--pink));
-  color: var(--dark);
+  color: #000;
   font-family: var(--font-orbitron), monospace;
   text-transform: uppercase;
   font-weight: 700;
   font-size: 0.75rem;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-decoration: none;
   text-align: center;
   transition: all 0.3s;
   box-shadow: 0 4px 15px rgba(0, 240, 255, 0.1);
   border-radius: 4px;
+}
+
+.submitBtn:hover {
+  background: white;
+  color: var(--dark);
+  box-shadow: 0 0 30px rgba(var(--accent-rgb, 255, 0, 225), 0.4);
+  transform: translateY(-2px);
+}
+
+.submitBtn:active {
+  transform: translateY(0);
 }
 
 /* Rules Modal Specific */

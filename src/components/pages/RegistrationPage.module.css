@@ -122,6 +122,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start; /* Revert to left alignment */
 }
 
 .catCard::before {
@@ -179,6 +180,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 0.8rem;
+  justify-content: center; /* Center cards in desktop if they don't fill the row */
 }
 
 .eventItem {
@@ -241,12 +243,86 @@
 
 @media (max-width: 768px) {
   .page {
-    padding-top: 20px !important;
+    padding: 20px 1rem 80px !important;
   }
+  
+  .flow {
+    margin-top: 0.8rem; /* Even more compact */
+    gap: 1rem;
+  }
+
+  .regStepNum {
+    display: none; /* Hide decorative numbers to save space/distraction on mobile */
+  }
+
   .gridCats {
     grid-template-columns: 1fr;
+    gap: 0.6rem;
   }
+
+  .catCard {
+    padding: 0.8rem;
+  }
+
+  /* Compact headings on mobile */
+  :global(.sp-title) {
+    font-size: 1.8rem !important;
+    margin-bottom: 0.2rem !important;
+  }
+
+  :global(.sp-sub) {
+    font-size: 0.5rem !important;
+    letter-spacing: 2px !important;
+  }
+
+  .stepLabel {
+    justify-content: flex-start;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.15); /* Maintain bottom line but align left */
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .stepLabel::after {
+    display: none; /* Hide the flex-line on mobile */
+  }
+
+  .subEventsContainer {
+    padding: 1rem; /* Even more compact */
+    margin: 0.5rem 0 1.5rem 0;
+  }
+
+  .subLabel {
+    margin-bottom: 1rem !important;
+    text-align: left;
+    justify-content: flex-start;
+  }
+
   .gridEvents {
     grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 340px; /* Slightly bigger/constrained for centering */
+    margin: 0 auto;
+  }
+
+  .eventItem {
+    padding: 1rem 1.2rem; /* Balanced padding */
+    justify-content: center;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .eventName {
+    font-size: 0.95rem; /* More prominent */
+    font-weight: 600;
+    flex-grow: 0;
+    width: 100%;
+    margin-bottom: 0.4rem;
+    letter-spacing: 1px;
+  }
+
+  .eventBtn {
+    font-size: 0.55rem;
+    padding: 0.35rem 1rem;
   }
 }

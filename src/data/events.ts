@@ -11,7 +11,6 @@ export const eventSections: EventSectionData[] = [
             'Focus on technical excellence and engineering innovation. Showcase your models and technical skills to a panel of experts.',
         info: [
             { label: 'Date', value: 'April 1–2, 2026' },
-            { label: 'Venue', value: 'SVIST Campus' },
             { label: 'Event', value: 'TechTrix' },
             { label: 'Prize Pool', value: '₹12,000' },
             { label: 'Contacts', value: '7439433699 / 7980432271' },
@@ -42,7 +41,6 @@ export const eventSections: EventSectionData[] = [
             'The arena where machines clash and autonomy reigns. From high-speed racing to brutal combat, robotics pushes the limits of engineering.',
         info: [
             { label: 'Date', value: 'April 1–2, 2026' },
-            { label: 'Venue', value: 'Robotics Arena, SVIST' },
             { label: 'Format', value: 'Technical' },
             { label: 'Prize Pool', value: '₹13,500' },
             { label: 'Contacts', value: '8670413050 / 9883848584' },
@@ -97,7 +95,6 @@ export const eventSections: EventSectionData[] = [
             'Express your artistic vision through various mediums. CreaTeX celebrates the intersection of art and digital media.',
         info: [
             { label: 'Date', value: 'April 1–2, 2026' },
-            { label: 'Venue', value: 'Creative Zone, SVIST' },
             { label: 'Format', value: 'Arts & Media' },
             { label: 'Prize Pool', value: '₹13,500' },
             { label: 'Contacts', value: '7908289795 / 8282832227' },
@@ -159,7 +156,6 @@ export const eventSections: EventSectionData[] = [
             'A blend of traditional craft and modern fashion. Craftomania is where skilled hands create magic.',
         info: [
             { label: 'Date', value: 'April 1–2, 2026' },
-            { label: 'Venue', value: 'Main Hall, SVIST' },
             { label: 'Format', value: 'Creative' },
             { label: 'Prize Pool', value: '₹9,000' },
             { label: 'Contacts', value: '9136045890 / 7797602201' },
@@ -207,7 +203,6 @@ export const eventSections: EventSectionData[] = [
             'The flagship personality contest searching for the most charismatic and talented engineer on campus.',
         info: [
             { label: 'Date', value: 'April 2, 2026' },
-            { label: 'Venue', value: 'Stage, SVIST' },
             { label: 'Format', value: 'Personality' },
         ],
         cards: [
@@ -238,7 +233,6 @@ export const eventSections: EventSectionData[] = [
             'Put your intellect to the test with games that require deep focus, strategy, and logic.',
         info: [
             { label: 'Date', value: 'April 1, 2026' },
-            { label: 'Venue', value: 'Seminar Hall, SVIST' },
             { label: 'Format', value: 'Mind Games' },
             { label: 'Prize Pool', value: '₹5,000' },
             { label: 'Contacts', value: '9800816549 / 7595949830' },
@@ -287,7 +281,6 @@ export const eventSections: EventSectionData[] = [
             'The ultimate coding challenge. From web development to query optimization, prove your coding prowess.',
         info: [
             { label: 'Date', value: 'April 1–2, 2026' },
-            { label: 'Venue', value: 'Labs, SVIST' },
             { label: 'Format', value: 'Programming' },
             { label: 'Prize Pool', value: '₹13,500' },
             { label: 'Contacts', value: '9830737588 / 6290364458' },
@@ -351,7 +344,6 @@ export const eventSections: EventSectionData[] = [
             'Bridge the gap between technology and business. Pitch your startup or showcase your innovative ideas.',
         info: [
             { label: 'Date', value: 'April 2, 2026' },
-            { label: 'Venue', value: 'Conference Room, SVIST' },
             { label: 'Format', value: 'Business' },
             { label: 'Prize Pool', value: '₹7,000' },
             { label: 'Contacts', value: '8617284537 / 9330565273' },
@@ -404,7 +396,6 @@ export const eventSections: EventSectionData[] = [
             'Compete in the biggest esports titles. High stakes, high intensity, and glory awaits the champions.',
         info: [
             { label: 'Date', value: 'April 1–2, 2026' },
-            { label: 'Venue', value: 'Gaming Arena, SVIST' },
             { label: 'Format', value: 'Esports' },
             { label: 'Prize Pool', value: '₹11,000' },
             { label: 'Contacts', value: '6296376591 / 9093653574' },

@@ -26,8 +26,8 @@ const RegistrationModal = memo(function RegistrationModal({ isOpen, onClose, eve
 
     return (
         <div className={styles.overlay} onClick={onClose}>
-            <div 
-                className={styles.content} 
+            <div
+                className={styles.content}
                 onClick={(e) => e.stopPropagation()}
                 style={{ '--accent': accentColor } as React.CSSProperties}
             >
@@ -39,49 +39,46 @@ const RegistrationModal = memo(function RegistrationModal({ isOpen, onClose, eve
                         </svg>
                     </button>
                 </div>
-                
+
                 <div className={styles.body}>
-                    <a 
-                        href="https://docs.google.com/forms/d/e/1FAIpQLScAgcmQetC-ZC5H_XEDMUIatjmI-xD1yFQyRnRiQdoLdF5mhw/viewform?usp=publish-editor" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className={styles.externalFormBtn}
-                    >
-                        Non-SVISTian?
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                            <path d="M7 17L17 7M17 7H7M17 7V17" />
-                        </svg>
-                    </a>
-                    
                     <div className={styles.brochureSection}>
                         <div className={styles.brochureContainer}>
                             {eventData.brochure ? (
-                                <Image 
-                                    src={eventData.brochure} 
-                                    alt="Event Brochure" 
-                                    className={styles.brochureImg} 
-                                    width={400} 
+                                <Image
+                                    src={eventData.brochure}
+                                    alt="Event Brochure"
+                                    className={styles.brochureImg}
+                                    width={400}
                                     height={560}
                                     priority
                                     unoptimized
                                 />
                             ) : (
-                                <span style={{ textAlign: 'center' }}>BROCHURE<br/>PENDING</span>
+                                <span style={{ textAlign: 'center' }}>BROCHURE<br />PENDING</span>
                             )}
                         </div>
-                        <div className={styles.brochureHint}>Brochure contains event QR</div>
                     </div>
                 </div>
 
                 <div className={styles.footer}>
-                    <a 
-                        href={eventData.regLink || '#'} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className={styles.submitBtn}
-                    >
-                        Click to Register
-                    </a>
+                    <div className={styles.btnGroup}>
+                        <a
+                            href={eventData.regLink || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.submitBtn}
+                        >
+                            SVIST?
+                        </a>
+                        <a
+                            href="https://docs.google.com/forms/d/e/1FAIpQLScAgcmQetC-ZC5H_XEDMUIatjmI-xD1yFQyRnRiQdoLdF5mhw/viewform?usp=publish-editor"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.nonSvistBtn}
+                        >
+                            Non-SVIST?
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
