@@ -212,7 +212,7 @@ export const eventSections: EventSectionData[] = [
                 description: 'The search for the most talented and charismatic engineer. This flagship event tests personality, intellect, and talent.',
                 badges: [{ label: 'All' }, { label: 'Register', isPrize: true }],
                 number: '01',
-                brochure: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/MrMs%20Engineer.jpeg',
+                brochure: 'https://8pvztqt2c4vajhyz.public.blob.vercel-storage.com/Brochure/9-mrmsengineer-draft.png',
                 regLink: 'https://docs.google.com/forms/d/e/1FAIpQLSf_Uvdk0D5FueXkgroQhBWzXvIqaM0g_JGet266RFitg09IlQ/viewform',
                 rules: [
                     'Participants must wear formal attire.',
