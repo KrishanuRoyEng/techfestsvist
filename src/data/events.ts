@@ -297,7 +297,7 @@ export const eventSections: EventSectionData[] = [
                 regLink: 'https://docs.google.com/forms/d/e/1FAIpQLSeZKWmigEDnygFI7bPmw6NjM-kRrWpqA32-Ixqs4uOv-cHG1g/viewform',
                 rules: [
                     'Participants must bring their own laptops and chargers.',
-                    'Team size: 1 to 3 members.',
+                    'Team size: 1 member only.',
                     'Use of AI coding assistants (like ChatGPT or GitHub Copilot) is strictly prohibited.',
                     'Final judging will be based on execution time, memory optimization, and code readability.'
                 ],
@@ -312,7 +312,7 @@ export const eventSections: EventSectionData[] = [
                 regLink: 'https://docs.google.com/forms/d/e/1FAIpQLSeZKWmigEDnygFI7bPmw6NjM-kRrWpqA32-Ixqs4uOv-cHG1g/viewform',
                 rules: [
                     'Participants must bring their own laptops and chargers.',
-                    'Team size: 1 to 3 members.',
+                    'Team size: 1 member only.',
                     'Use of AI coding assistants (like ChatGPT or GitHub Copilot) is strictly prohibited.',
                     'Final judging will be based on execution time, memory optimization, and code readability.'
                 ],
@@ -327,7 +327,7 @@ export const eventSections: EventSectionData[] = [
                 regLink: 'https://docs.google.com/forms/d/e/1FAIpQLSeZKWmigEDnygFI7bPmw6NjM-kRrWpqA32-Ixqs4uOv-cHG1g/viewform',
                 rules: [
                     'Participants must bring their own laptops and chargers.',
-                    'Team size: 1 to 3 members.',
+                    'Team size: 1 member only.',
                     'Use of AI coding assistants (like ChatGPT or GitHub Copilot) is strictly prohibited.',
                     'Final judging will be based on execution time, memory optimization, and code readability.'
                 ],
